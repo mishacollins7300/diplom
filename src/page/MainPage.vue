@@ -33,13 +33,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {computed, ref} from 'vue'
+import { useStore } from 'vuex'
 import CurseCart from "@/components/CurseCart"
 import FilterTable from "@/components/FilterTable"
 
 const filterCurse = ref("")
 const filterPrepod = ref("")
 
+const store = useStore()
+
+const curseList = computed(() => store.getters.getCurses)
+console.log(curseList)
 const data = [
   {
     name: 55,
@@ -91,6 +96,8 @@ const filterTable = () => {
   }
   console.log(payload)
 }
+
+
 </script>
 
 <style scoped>
