@@ -2,19 +2,31 @@ import MainPage from '@/page/MainPage'
 import LoginPage from '@/page/LoginPage'
 import CurseSearchPage from '@/page/CurseSearchPage'
 import ProfilePage from '@/page/ProfilePage'
+import RegistrationPage from '@/page/RegistrationPage'
 
 const routes = [
     {
         path: '/',
         name: 'mainPage',
         component: MainPage,
+        meta: {
+            layout: 'IndexPage'
+        }
     },
     {
         path: '/login',
         name: 'login',
         component: LoginPage,
         meta: {
-            layout: 'EmptyLayout'
+            layout: 'LoginPage'
+        }
+    },
+    {
+        path: '/registration',
+        name: 'registration',
+        component: RegistrationPage,
+        meta: {
+            layout: 'LoginPage'
         }
     },
     {
@@ -22,7 +34,7 @@ const routes = [
         name: 'recomended-curce',
         component: CurseSearchPage,
         meta: {
-            layout: 'EmptyLayout'
+            layout: 'IndexPage'
         }
     },
     {
@@ -30,7 +42,7 @@ const routes = [
         name: 'profile',
         component: ProfilePage,
         meta: {
-            layout: 'EmptyLayout'
+            layout: 'IndexPage'
         }
     },
 ]

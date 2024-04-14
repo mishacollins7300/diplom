@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-5">
+  <div class="flex flex-col gap-5 pb-10">
     <div class="text-stone-900">Все доступные курсы</div>
     <FilterTable @filter-table="filterTable">
       <el-input
@@ -14,18 +14,17 @@
       />
     </FilterTable>
     <div class="grid grid-cols-5 gap-4 place-content-center">
-      <div
-          v-for="(elem, index) in data"
-          :key="index"
-      >
-        <CurseCart :data="elem"></CurseCart>
-      </div>
+        <CurseCart
+            v-for="(elem, index) in data"
+            :key="index"
+            :data="elem">
+        </CurseCart>
     </div>
     <el-pagination
         small
         background
         layout="prev, pager, next"
-        :total="50"
+        :total="5"
         class="mt-4"
         :page-count="4"
     />
@@ -47,46 +46,89 @@ const curseList = computed(() => store.getters.getCurses)
 console.log(curseList)
 const data = [
   {
-    name: 55,
-    description: ',,a,aa,a',
-    data: '21.10.2006',
+    name: "Английский язык для технических направлений",
+    description: 'Курс английского языка для студентов технических направлений: программирование, математические науки и строительство',
+    data: '2015-10-1',
+    prepod: 'Керзин С. Д.',
     img: 'http://localhost:8080/src/assets/img/image.png'
   },
   {
-    name: 55,
-    description: ',,a,aa,a',
-    data: '21.10.2006',
+    name: "Программирование систем для Андроид",
+    description: 'Программирование систем для платформы анроид на языке Java',
+    data: '2015-10-1',
+    prepod: 'Керзин С. Д.',
     img: 'http://localhost:8080/src/assets/img/image.png'
   },
   {
-    name: 55,
-    description: ',,a,aa,a',
-    data: '21.10.2006',
+    name: "Менеджмент 3 курс",
+    description: 'Курс менеджмента для студентов международного факультета',
+    data: '2015-10-1',
+    prepod: 'Треновна С. Д.',
     img: 'http://localhost:8080/src/assets/img/image.png'
   },
   {
-    name: 55,
-    description: ',,a,aa,a',
-    data: '21.10.2006',
+    name: "Моделирование в среде Blender",
+    description: 'Курс моделирования для студентов направлений ПИ и ИСЭ',
+    data: '2015-10-1',
+    prepod: 'Руков С. Д.',
     img: 'http://localhost:8080/src/assets/img/image.png'
   },
   {
-    name: 55,
-    description: ',,a,aa,a',
-    data: '21.10.2006',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },{
-    name: 55,
-    description: ',,a,aa,a',
-    data: '21.10.2006',
+    name: "Английский язык для технических направлений",
+    description: 'Курс английского языка для студентов технических направлений: программирование, математические науки и строительство',
+    data: '2015-10-1',
+    prepod: 'Керзин С. Д.',
     img: 'http://localhost:8080/src/assets/img/image.png'
   },
   {
-    name: 55,
-    description: ',,a,aa,a',
-    data: '21.10.2006',
+    name: "Программирование систем для Андроид",
+    description: 'Программирование систем для платформы анроид на языке Java',
+    data: '2015-10-1',
+    prepod: 'Керзин С. Д.',
     img: 'http://localhost:8080/src/assets/img/image.png'
   },
+  {
+    name: "Менеджмент 3 курс",
+    description: 'Курс менеджмента для студентов международного факультета',
+    data: '2015-10-1',
+    prepod: 'Треновна С. Д.',
+    img: 'http://localhost:8080/src/assets/img/image.png'
+  },
+  {
+    name: "Моделирование в среде Blender",
+    description: 'Курс моделирования для студентов направлений ПИ и ИСЭ',
+    data: '2015-10-1',
+    prepod: 'Руков С. Д.',
+    img: 'http://localhost:8080/src/assets/img/image.png'
+  },
+  {
+    name: "Английский язык для технических направлений",
+    description: 'Курс английского языка для студентов технических направлений: программирование, математические науки и строительство',
+    data: '2015-10-1',
+    prepod: 'Керзин С. Д.',
+    img: 'http://localhost:8080/src/assets/img/image.png'
+  },
+  {
+    name: "Программирование систем для Андроид",
+    description: 'Программирование систем для платформы анроид на языке Java',
+    data: '2015-10-1',
+    prepod: 'Керзин С. Д.',
+    img: 'http://localhost:8080/src/assets/img/image.png'
+  },
+  {
+    name: "Менеджмент 3 курс",
+    description: 'Курс менеджмента для студентов международного факультета',
+    data: '2015-10-1',
+    prepod: 'Треновна С. Д.',
+    img: 'http://localhost:8080/src/assets/img/image.png'
+  },
+  {
+    name: "Моделирование в среде Blender",
+    description: 'Курс моделирования для студентов направлений ПИ и ИСЭ',
+    data: '2015-10-1',
+    prepod: 'Руков С. Д.',
+    img: 'http://localhost:8080/src/assets/img/image.png'
+  }
 ]
 
 const filterTable = () => {

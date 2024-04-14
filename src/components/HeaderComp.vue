@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed shadow-md w-full">
+  <div class="fixed shadow-md w-full bg-white z-10">
     <el-page-header>
       <template #content>
         <div class="flex items-center">
