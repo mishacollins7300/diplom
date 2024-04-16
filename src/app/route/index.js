@@ -5,21 +5,21 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
-router.beforeEach((to, from, next) => {
-    checkUserAuthorization(to, next)
-})
+// router.beforeEach((to, from, next) => {
+//     checkUserAuthorization(to, next)
+// })
 
-const checkUserAuthorization = async (to, next) => {
-    const token = localStorage.getItem('userToken')
-    if (to.path === '/login') {
-        next()
-        return
-    }
-    if (!token) {
-        next({ name: 'login' })
-        return
-    }
-    next()
-}
+// const checkUserAuthorization = async (to, next) => {
+//     const token = localStorage.getItem('userToken')
+//     if (to.path === '/login') {
+//         next()
+//         return
+//     }
+//     if (!token) {
+//         next({ name: 'login' })
+//         return
+//     }
+//     next()
+// }
 
 export default router

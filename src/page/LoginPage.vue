@@ -6,7 +6,7 @@
         :model="form"
     >
       <el-form-item label="Логин">
-        <el-input v-model="form.login" />
+        <el-input v-model="form.username" />
       </el-form-item>
       <el-form-item label="Пароль">
         <el-input v-model="form.password" />
@@ -23,15 +23,23 @@
 <script setup>
 import { reactive } from 'vue'
 import { useStore } from 'vuex'
+import axios from 'axios'
 
 const store = useStore()
 const form = reactive({
-  login: '',
+  username: '',
   password: ''
 })
 
 const auth = () => {
   store.commit('setAuth', true)
+  axios.post('http://localhost:8081/authenticateUser', form)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 }
 </script>
 

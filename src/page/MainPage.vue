@@ -15,27 +15,20 @@
     </FilterTable>
     <div class="grid grid-cols-5 gap-4 place-content-center">
         <CurseCart
-            v-for="(elem, index) in data"
+            v-for="(elem, index) in curse"
             :key="index"
             :data="elem">
         </CurseCart>
     </div>
-    <el-pagination
-        small
-        background
-        layout="prev, pager, next"
-        :total="5"
-        class="mt-4"
-        :page-count="4"
-    />
   </div>
 </template>
 
 <script setup>
-import {computed, ref} from 'vue'
+import {computed, ref, onMounted} from 'vue'
 import { useStore } from 'vuex'
 import CurseCart from "@/components/CurseCart"
 import FilterTable from "@/components/FilterTable"
+import axios from 'axios'
 
 const filterCurse = ref("")
 const filterPrepod = ref("")
@@ -44,93 +37,7 @@ const store = useStore()
 
 const curseList = computed(() => store.getters.getCurses)
 console.log(curseList)
-const data = [
-  {
-    name: "Английский язык для технических направлений",
-    description: 'Курс английского языка для студентов технических направлений: программирование, математические науки и строительство',
-    data: '2015-10-1',
-    prepod: 'Керзин С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Программирование систем для Андроид",
-    description: 'Программирование систем для платформы анроид на языке Java',
-    data: '2015-10-1',
-    prepod: 'Керзин С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Менеджмент 3 курс",
-    description: 'Курс менеджмента для студентов международного факультета',
-    data: '2015-10-1',
-    prepod: 'Треновна С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Моделирование в среде Blender",
-    description: 'Курс моделирования для студентов направлений ПИ и ИСЭ',
-    data: '2015-10-1',
-    prepod: 'Руков С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Английский язык для технических направлений",
-    description: 'Курс английского языка для студентов технических направлений: программирование, математические науки и строительство',
-    data: '2015-10-1',
-    prepod: 'Керзин С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Программирование систем для Андроид",
-    description: 'Программирование систем для платформы анроид на языке Java',
-    data: '2015-10-1',
-    prepod: 'Керзин С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Менеджмент 3 курс",
-    description: 'Курс менеджмента для студентов международного факультета',
-    data: '2015-10-1',
-    prepod: 'Треновна С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Моделирование в среде Blender",
-    description: 'Курс моделирования для студентов направлений ПИ и ИСЭ',
-    data: '2015-10-1',
-    prepod: 'Руков С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Английский язык для технических направлений",
-    description: 'Курс английского языка для студентов технических направлений: программирование, математические науки и строительство',
-    data: '2015-10-1',
-    prepod: 'Керзин С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Программирование систем для Андроид",
-    description: 'Программирование систем для платформы анроид на языке Java',
-    data: '2015-10-1',
-    prepod: 'Керзин С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Менеджмент 3 курс",
-    description: 'Курс менеджмента для студентов международного факультета',
-    data: '2015-10-1',
-    prepod: 'Треновна С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  },
-  {
-    name: "Моделирование в среде Blender",
-    description: 'Курс моделирования для студентов направлений ПИ и ИСЭ',
-    data: '2015-10-1',
-    prepod: 'Руков С. Д.',
-    img: 'http://localhost:8080/src/assets/img/image.png'
-  }
-]
-
+const curse = ref([])
 const filterTable = () => {
   const payload = {
     prep: filterPrepod.value,
@@ -139,7 +46,15 @@ const filterTable = () => {
   console.log(payload)
 }
 
-
+onMounted(() => {
+  axios.get('http://localhost:8081/api/v1/classes/recommended')
+  .then(function (response) {
+    curse.value = response.data.classes
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+})
 </script>
 
 <style scoped>

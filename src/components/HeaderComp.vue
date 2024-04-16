@@ -14,9 +14,7 @@
       </template>
       <template #extra>
         <div class="flex items-center">
-          <el-button><router-link to="/profile">Профиль</router-link></el-button>
-          <el-button>Выйти</el-button>
-          <el-button>Войти</el-button>
+          <el-button @click="test">Профиль</el-button>
         </div>
       </template>
     </el-page-header>
@@ -25,7 +23,17 @@
 
 <script setup>
 import { onMounted } from "vue";
+import axios from "axios"
 
+const test = () => {
+  axios.get('http://localhost:8081/api/v1/account')
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 onMounted(() => {
   document.getElementsByClassName('el-page-header__back')[0].style.display = 'none'
   document.getElementsByClassName('el-divider el-divider--vertical')[0].style.display = 'none'
