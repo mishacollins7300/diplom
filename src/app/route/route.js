@@ -3,6 +3,8 @@ import LoginPage from '@/page/LoginPage'
 import CurseSearchPage from '@/page/CurseSearchPage'
 import ProfilePage from '@/page/ProfilePage'
 import RegistrationPage from '@/page/RegistrationPage'
+import MySubscribesPage from '@/page/MySubscribesPage'
+import CursePage from "@/page/CursePage";
 
 const routes = [
     {
@@ -33,6 +35,22 @@ const routes = [
         path: '/recomended-curce',
         name: 'recomended-curce',
         component: CurseSearchPage,
+        meta: {
+            layout: 'IndexPage'
+        }
+    },
+    {
+        path: '/my-subscribes',
+        name: 'my-subscribes',
+        component: MySubscribesPage,
+        meta: {
+            layout: 'IndexPage'
+        }
+    },
+    {
+        path: '/curse/:id',
+        name: 'curse',
+        component: CursePage,
         meta: {
             layout: 'IndexPage'
         }
