@@ -7,6 +7,7 @@ import MySubscribesPage from '@/page/MySubscribesPage'
 import CursePage from "@/page/CursePage";
 import CreateGroup from "@/page/creator/CreateGroup";
 import UserGroup from "@/page/creator/UserGroup";
+import VideoView from "@/page/creator/VideoView";
 
 const routes = [
     {
@@ -51,8 +52,16 @@ const routes = [
     },
     {
         path: '/creator/create-group',
-        name: 'create-groupe',
+        name: 'creator',
         component: CreateGroup,
+        meta: {
+            layout: 'CreatorLayout'
+        }
+    },
+    {
+        path: '/creator/video',
+        name: 'video',
+        component: VideoView,
         meta: {
             layout: 'CreatorLayout'
         }
