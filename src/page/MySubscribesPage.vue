@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-5 pb-10">
-    <div class="text-stone-900">Мои подписки</div>
+    <div class="text-stone-900 text-3xl">Мои подписки</div>
     <FilterTable @filter-table="filterTable">
       <el-input
           v-model="filterCurse"
@@ -27,10 +27,11 @@
 </template>
 
 <script setup>
-import {computed, ref} from 'vue'
+import {computed, ref, onMounted} from 'vue'
 import { useStore } from 'vuex'
 import CurseCart from "@/components/CurseCart"
 import FilterTable from "@/components/FilterTable"
+import axios from "axios"
 
 const filterCurse = ref("")
 
@@ -44,6 +45,16 @@ const filterTable = () => {
   }
   console.log(payload, curseList)
 }
+const data = ref({})
+onMounted(() => {
+  axios.get('http://localhost:8081/api/v1/classes/recommended')
+  .then(function (response) {
+    data.value = response.data.classes
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+})
 </script>
 
 <style scoped>
