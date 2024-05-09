@@ -6,6 +6,11 @@
       <p class="text-3xl">Создание пользователя</p>
 
       <div class="flex gap-4">
+        <el-text class="mx-1" size="large">Логин</el-text>
+        <el-input style="width: 300px" placeholder=""/>
+      </div>
+
+      <div class="flex gap-4">
         <el-text class="mx-1" size="large">Почта</el-text>
         <el-input style="width: 300px" placeholder=""/>
       </div>
@@ -42,13 +47,12 @@
         <el-button type="primary">Загрузить</el-button>
       </div>
 
-      <el-image style="width: 250px; height: 250px" :src="url" fit="contains"/>
 
       <div class="flex gap-4">
         <el-text class="mx-1" size="large">Статус</el-text>
         <el-input
             v-model="textarea"
-            style="width: 240px"
+            style="width: 400px"
             :rows="2"
             type="textarea"
             placeholder=""
@@ -61,7 +65,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+
+import {ref} from 'vue'
 
 const textarea = ref('')
 
@@ -81,9 +86,6 @@ const options = [
     label: 'ADMIN'
   }
 ];
-
-const url =
-    'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg';
 </script>
 
 <style scoped>
