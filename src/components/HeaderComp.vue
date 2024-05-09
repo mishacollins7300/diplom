@@ -11,9 +11,6 @@
           <el-button text><router-link to="/recomended-curce">Рекомендованые курсы</router-link></el-button>
           <el-button text><router-link to="/my-subscribes">Мои подписки</router-link></el-button>
         </div>
-
-
-
       </template>
       <template #extra>
         <div class="flex items-center">
