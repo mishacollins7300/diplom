@@ -6,6 +6,7 @@ import RegistrationPage from '@/page/RegistrationPage'
 import MySubscribesPage from '@/page/MySubscribesPage'
 import CursePage from "@/page/CursePage";
 import CreateGroup from "@/page/creator/CreateGroup";
+import UserGroup from "@/page/creator/UserGroup";
 
 const routes = [
     {
@@ -52,6 +53,14 @@ const routes = [
         path: '/creator/create-group',
         name: 'create-groupe',
         component: CreateGroup,
+        meta: {
+            layout: 'CreatorLayout'
+        }
+    },
+    {
+        path: '/creator/user-group',
+        name: 'user-group',
+        component: UserGroup,
         meta: {
             layout: 'CreatorLayout'
         }
