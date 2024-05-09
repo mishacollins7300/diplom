@@ -1,4 +1,6 @@
-import MainPage from '@/page/MainPage'
+import MainPage from '@/page/admin/MainPage'
+import UserCreationPage from '@/page/admin/UserCreationPage'
+import UserUpdatePage from '@/page/admin/UserUpdatePage'
 import LoginPage from '@/page/LoginPage'
 import CurseSearchPage from '@/page/CurseSearchPage'
 import ProfilePage from '@/page/ProfilePage'
@@ -8,9 +10,25 @@ import CursePage from "@/page/CursePage";
 
 const routes = [
     {
-        path: '/',
+        path: '/admin',
         name: 'mainPage',
         component: MainPage,
+        meta: {
+            layout: 'IndexPage'
+        }
+    },
+    {
+        path: '/admin/create',
+        name: 'userCreatePage',
+        component: UserCreationPage,
+        meta: {
+            layout: 'IndexPage'
+        }
+    },
+    {
+        path: '/admin/edit',
+        name: 'userEditPage',
+        component: UserUpdatePage,
         meta: {
             layout: 'IndexPage'
         }
