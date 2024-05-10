@@ -14,6 +14,7 @@ import UpdateVideo from "@/page/creator/UpdateVideo.vue";
 import PermissionList from "@/page/creator/PermissionList.vue";
 import CreatePermission from "@/page/creator/CreatePermission.vue";
 import UpdatePermission from "@/page/creator/UpdatePermission.vue";
+import StatisticsByPlaylist from "@/page/creator/StatisticsByPlaylist.vue";
 
 const routes = [
     {
@@ -140,6 +141,14 @@ const routes = [
         path: '/creator/update-permission',
         name: 'update-permission',
         component: UpdatePermission,
+        meta: {
+            layout: 'CreatorLayout'
+        }
+    },
+    {
+        path: '/creator/playlist-statistic',
+        name: 'playlist-statistic',
+        component: StatisticsByPlaylist,
         meta: {
             layout: 'CreatorLayout'
         }
