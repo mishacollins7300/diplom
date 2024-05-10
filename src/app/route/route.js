@@ -15,6 +15,7 @@ import PermissionList from "@/page/creator/PermissionList.vue";
 import CreatePermission from "@/page/creator/CreatePermission.vue";
 import UpdatePermission from "@/page/creator/UpdatePermission.vue";
 import StatisticsByPlaylist from "@/page/creator/StatisticsByPlaylist.vue";
+import StatisticsByGroup from "@/page/creator/StatisticsByGroup.vue";
 
 const routes = [
     {
@@ -149,6 +150,14 @@ const routes = [
         path: '/creator/playlist-statistic',
         name: 'playlist-statistic',
         component: StatisticsByPlaylist,
+        meta: {
+            layout: 'CreatorLayout'
+        }
+    },
+    {
+        path: '/creator/group-statistic',
+        name: 'group-statistic',
+        component: StatisticsByGroup,
         meta: {
             layout: 'CreatorLayout'
         }
