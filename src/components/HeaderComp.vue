@@ -3,26 +3,31 @@
     <el-page-header>
       <template #content>
         <div class="flex items-center">
-          <el-button
-              text
-          >
-            <router-link to="/">Курсы</router-link>
+
+          <el-button text>
+            <router-link to="/recomended-curce">Главная</router-link>
           </el-button>
           <el-button text>
-            <router-link to="/recomended-curce">Рекомендованые курсы</router-link>
+            <router-link to="/recomended-curce">Группы пользователей</router-link>
           </el-button>
           <el-button text>
-            <router-link to="/my-subscribes">Мои подписки</router-link>
+            <router-link to="/recomended-curce">Плейлисты</router-link>
+          </el-button>
+          <el-button text>
+            <router-link to="/recomended-curce">Статистика</router-link>
+          </el-button>
+          <el-button text>
+            <router-link to="/recomended-curce">Доступы</router-link>
           </el-button>
         </div>
       </template>
       <template #extra>
         <div class="flex items-center gap-4">
           <div>
-            admin1
+            creator1
           </div>
           <div>
-            Сидоров В. В.
+            Колин В. В.
           </div>
           <el-button @click="test">Выйти</el-button>
         </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="py-5">
-      <div class="flex text-2xl">Создание группы пользователей</div>
+      <div class="flex text-2xl mb-10">Создание группы пользователей</div>
       <el-form :model="form" label-width="auto" style="max-width: 600px" label-position="top">
         <el-form-item label="Название группы" >
           <el-input v-model="form.name" />
@@ -15,7 +15,7 @@
           </div>
         </el-form-item>
       </el-form>
-      <div>
+      <div class="flex flex-col gap-3 mb-3">
         Найденные пользователи
         <el-table :data="tableData" style="width: 100%">
           <el-table-column prop="date" label="Логин" width="180" />
@@ -32,9 +32,9 @@
       <el-button type="primary" size="small">
         Загрузить json с пользователями
       </el-button>
-      <div>
+      <div class="flex flex-col gap-3 mt-3">
         Добавленные пользователи
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="tableDataAdded" style="width: 100%">
           <el-table-column prop="date" label="Логин" width="180" />
           <el-table-column prop="name" label="ФИО" width="180" />
           <el-table-column prop="address" label="Действие">
@@ -60,27 +60,24 @@
     description: '',
   })
 
+  const tableDataAdded = []
+
   const tableData = [
     {
-      date: 'user111',
+      date: 'user1111',
       name: 'Васин В.В. ',
       address: 'Добавить',
     },
     {
-      date: 'user222',
+      date: 'user2222',
       name: 'Катин В.В. ',
       address: 'Добавить',
     },
     {
-      date: 'user333',
+      date: 'user3333',
       name: 'Лешин В.В. ',
       address: 'Добавить',
-    },
-    {
-      date: 'user1444',
-      name: 'Санин В.В. ',
-      address: 'Добавить',
-    },
+    }
   ]
 
 </script>
