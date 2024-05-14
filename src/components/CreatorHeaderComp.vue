@@ -24,10 +24,10 @@
       <template #extra>
         <div class="flex items-center gap-4">
           <div>
-            creator1
+            {{ user.value?.username }}
           </div>
           <div>
-            Колин В. В.
+            {{ user.value?.fullname }}
           </div>
           <el-button @click="test">Выйти</el-button>
         </div>
@@ -38,16 +38,15 @@
 
 <script setup>
 import {onMounted} from "vue";
-import axios from "axios"
+import {useStore} from "vuex";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+const store = useStore()
+const user = store.getters.getUser
 
 const test = () => {
-  axios.get('http://localhost:8081/api/v1/account')
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  router.push("/login")
 }
 onMounted(() => {
   document.getElementsByClassName('el-page-header__back')[0].style.display = 'none'

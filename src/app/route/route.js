@@ -16,152 +16,156 @@ import CreatePermission from "@/page/creator/CreatePermission.vue";
 import UpdatePermission from "@/page/creator/UpdatePermission.vue";
 import StatisticsByPlaylist from "@/page/creator/StatisticsByPlaylist.vue";
 import StatisticsByGroup from "@/page/creator/StatisticsByGroup.vue";
+import {createRouter, createWebHistory} from 'vue-router'
 
-const routes = [
-    {
-        path: '/admin',
-        name: 'mainPage',
-        component: MainPage,
-        meta: {
-            layout: 'IndexPage'
+const router = createRouter({
+    history: createWebHistory(""),
+    routes: [
+        {
+            path: '/admin',
+            name: 'mainPage',
+            component: MainPage,
+            meta: {
+                layout: 'AdminLayout'
+            }
+        },
+        {
+            path: '/admin/create',
+            name: 'userCreatePage',
+            component: UserCreationPage,
+            meta: {
+                layout: 'AdminLayout'
+            }
+        },
+        {
+            path: '/admin/edit',
+            name: 'userEditPage',
+            component: UserUpdatePage,
+            meta: {
+                layout: 'AdminLayout'
+            }
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: LoginPage,
+            meta: {
+                layout: 'LoginPage'
+            }
+        },
+        {
+            path: '/creator/create-group',
+            name: 'creator',
+            component: CreateGroup,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/update-group',
+            name: 'updateGroup',
+            component: UpdateGroupPage,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/video',
+            name: 'video',
+            component: VideoView,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/user-group',
+            name: 'user-group',
+            component: UserGroup,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/create-playlist',
+            name: 'create-playlist',
+            component: CreatePlaylist,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/playlist-list',
+            name: 'playlist-list',
+            component: PlaylistList,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/playlist',
+            name: 'playlist',
+            component: PlaylistPage,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/create-video',
+            name: 'create-video',
+            component: CreateVideo,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/update-video',
+            name: 'update-video',
+            component: UpdateVideo,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/permission-list',
+            name: 'permission-list',
+            component: PermissionList,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/create-permission',
+            name: 'create-permission',
+            component: CreatePermission,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/update-permission',
+            name: 'update-permission',
+            component: UpdatePermission,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/playlist-statistic',
+            name: 'playlist-statistic',
+            component: StatisticsByPlaylist,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/group-statistic',
+            name: 'group-statistic',
+            component: StatisticsByGroup,
+            meta: {
+                layout: 'CreatorLayout'
+            }
         }
-    },
-    {
-        path: '/admin/create',
-        name: 'userCreatePage',
-        component: UserCreationPage,
-        meta: {
-            layout: 'IndexPage'
-        }
-    },
-    {
-        path: '/admin/edit',
-        name: 'userEditPage',
-        component: UserUpdatePage,
-        meta: {
-            layout: 'IndexPage'
-        }
-    },
-    {
-        path: '/login',
-        name: 'login',
-        component: LoginPage,
-        meta: {
-            layout: 'LoginPage'
-        }
-    },
-    {
-        path: '/creator/create-group',
-        name: 'creator',
-        component: CreateGroup,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/update-group',
-        name: 'updateGroup',
-        component: UpdateGroupPage,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/video',
-        name: 'video',
-        component: VideoView,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/user-group',
-        name: 'user-group',
-        component: UserGroup,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/create-playlist',
-        name: 'create-playlist',
-        component: CreatePlaylist,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/playlist-list',
-        name: 'playlist-list',
-        component: PlaylistList,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/playlist',
-        name: 'playlist',
-        component: PlaylistPage,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/create-video',
-        name: 'create-video',
-        component: CreateVideo,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/update-video',
-        name: 'update-video',
-        component: UpdateVideo,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/permission-list',
-        name: 'permission-list',
-        component: PermissionList,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/create-permission',
-        name: 'create-permission',
-        component: CreatePermission,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/update-permission',
-        name: 'update-permission',
-        component: UpdatePermission,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/playlist-statistic',
-        name: 'playlist-statistic',
-        component: StatisticsByPlaylist,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    },
-    {
-        path: '/creator/group-statistic',
-        name: 'group-statistic',
-        component: StatisticsByGroup,
-        meta: {
-            layout: 'CreatorLayout'
-        }
-    }
-]
+    ]
+})
 
-export default routes
+export default router

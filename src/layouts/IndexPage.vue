@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import HeaderComp from '@/components/HeaderComp'
+import HeaderComp from '@/components/CreatorHeaderComp.vue'
 </script>
 
 <style scoped>

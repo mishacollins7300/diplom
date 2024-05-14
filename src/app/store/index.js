@@ -5,7 +5,8 @@ const store = createStore({
     state () {
         return {
             curses: [],
-            auth: false
+            auth: false,
+            user: {}
         }
     },
     getters: {
@@ -14,6 +15,9 @@ const store = createStore({
         },
         getAuth (state) {
             return state.auth
+        },
+        getUser(state) {
+            return state.user
         }
     },
     mutations: {
@@ -22,13 +26,13 @@ const store = createStore({
         },
         setAuth(state, payload) {
             state.auth = payload
+        },
+        setUser(state, payload) {
+            state.user = payload
         }
     },
     actions: {
-        getCurses ({commit}) {
-            const result = fetch('')
-            commit('setCurses', result)
-        }
+
     }
 })
 

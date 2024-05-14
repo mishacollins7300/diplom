@@ -7,7 +7,7 @@
 
       <div class="flex gap-4">
         <el-input v-model="searchInput" style="width: 300px" placeholder="Поиск по имени или логину"/>
-        <el-button type="primary">Найти</el-button>
+        <el-button type="primary" @click="searchUser">Найти</el-button>
       </div>
 
       <div class="flex gap-4">
@@ -17,16 +17,16 @@
 
       <div>
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="login" label="Логин" />
-          <el-table-column prop="name" label="ФИО" />
+          <el-table-column prop="username" label="Логин" />
+          <el-table-column prop="fullname" label="ФИО" />
           <el-table-column prop="mail" label="Почта" />
           <el-table-column prop="role" label="Роль" />
           <el-table-column prop="status" label="Статус" />
           <el-table-column fixed="right" label="Действия" prop="blocked" width="300">
             <template #default="scope">
-              <el-button link type="primary" size="small">Изменить</el-button>
+              <el-button link type="primary" @click="editUser(scope.row.id)" size="small">Изменить</el-button>
               <el-button link type="primary" size="small">Удалить</el-button>
-              <el-button link type="primary" size="small">{{ scope.row.blocked ? 'Разблокирвать' : 'Заблокировать' }}</el-button>
+              <el-button link type="primary" @click="blockUser(scope.row.id)" size="small">{{ scope.row.blocked ? 'Разблокирвать' : 'Заблокировать' }}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -36,66 +36,45 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
+import axios from "axios";
+import authHeader from "@/app/auth-header";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 
 const searchInput = ref('')
+const tableData = ref([]);
 
-const tableData = [
-  {
-    login: 'user1111',
-    name: 'Васин В. В.',
-    mail: 'vo@mail.ru',
-    role: 'USER',
-    status: '11',
-    blocked: false,
-  },
-  {
-    login: 'user2222',
-    name: 'Катин В. В.',
-    mail: 'ko@mail.ru',
-    role: 'USER',
-    status: '',
-    blocked: false,
-  },
-  {
-    login: 'user3333',
-    name: 'Лёшин В. В.',
-    mail: 'lo@mail.ru',
-    role: 'USER',
-    status: '',
-    blocked: false,
-  },
-  {
-    login: 'user4444',
-    name: 'Санин В. В.',
-    mail: 'so@mail.ru',
-    role: 'USER',
-    status: 'Статус',
-    blocked: true,
-  },
-  {
-    login: 'creator1',
-    name: 'Танин В. В.',
-    mail: 'to@mail.ru',
-    role: 'CREATOR',
-    status: '',
-    blocked: false,
-  },
-  {
-    login: 'creator2',
-    name: 'Колин В. В.',
-    mail: 'koo@mail.ru',
-    role: 'CREATOR',
-    status: '',
-    blocked: false,
-  },
-  {
-    login: 'admin1',
-    name: 'Сидоров В. В.',
-    mail: 'sio@mail.ru',
-    role: 'ADMIN',
-    status: '',
-    blocked: false,
-  },
-]
+const searchUser = () => {
+  axios.get("http://localhost:8081/app/users?search=" + searchInput.value, {headers: authHeader()})
+      .then((response) => {
+        tableData.value = response.data
+      })
+}
+
+const getUsers = () => {
+  axios.get("http://localhost:8081/app/users", {headers: authHeader()})
+      .then((response) => {
+        tableData.value = response.data
+      })
+}
+
+onMounted(() => {
+  getUsers()
+})
+
+const blockUser = (id) => {
+  axios.post("http://localhost:8081/app/user/block?userId=" + id, {headers: authHeader()})
+      .then(() => {
+        getUsers()
+      })
+}
+
+const editUser = (userId) => {
+  router.push({
+    name:"userEditPage",
+    query: {userId: userId}
+  })
+}
 </script>

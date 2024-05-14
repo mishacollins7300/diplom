@@ -24,8 +24,10 @@
 import { reactive } from 'vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
+import { useRouter } from "vue-router";
 
 const store = useStore()
+const router = useRouter()
 const form = reactive({
   username: '',
   password: ''
@@ -33,9 +35,25 @@ const form = reactive({
 
 const auth = () => {
   store.commit('setAuth', true)
-  axios.post('http://localhost:8081/authenticateUser', form)
+  axios.post('http://localhost:8081/auth/sign-in', form)
   .then(function (response) {
     console.log(response);
+    localStorage.setItem("token", JSON.stringify(response.data.token))
+    axios.get('http://localhost:8081/app/user', {
+      headers:{
+        Authorization: "Bearer " + response.data.token
+      }
+    }).then((response) => {
+      store.commit("setUser", response.data)
+      if(response.data.role === "ADMIN") {
+        router.push("/admin")
+      } else if(response.data.role === "CREATOR") {
+        router.push("/creator/user-group")
+      } else {
+        router.push("/")
+      }
+    })
+
   })
   .catch(function (error) {
     console.log(error);

@@ -1,12 +1,12 @@
 <template>
-  <HeaderComp></HeaderComp>
+  <AdminHeaderComp></AdminHeaderComp>
   <div class="main-container p-14 py-20">
     <RouterView />
   </div>
 </template>
 
 <script setup>
-import HeaderComp from '@/components/HeaderComp'
+import AdminHeaderComp from '@/components/AdminHeaderComp.vue'
 </script>
 
 <style scoped>
