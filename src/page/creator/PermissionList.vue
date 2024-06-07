@@ -5,7 +5,9 @@
       <div class="flex gap-4">
         <el-input v-model="name"/>
         <el-button type="primary" @click="() => console.log(4 )">Поиск</el-button>
-        <el-button type="primary" @click="() => console.log(4 )">Создать</el-button>
+      </div>
+      <div class="flex gap-4">
+        <el-button type="primary" @click="() => router.push({ path: '/creator/create-permission' })">Создать</el-button>
       </div>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="username" label="Пользователь" width="180"/>
@@ -28,29 +30,21 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import axios from "axios";
+import authHeader from "@/app/auth-header";
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 const name = ref('')
-const tableData = [
-  {
-    creation_date: '2022-04-22',
-    inspire_date: '-',
-    username: 'user1111',
-    user_group: ''
-  },
-  {
-    creation_date: '2022-04-22',
-    inspire_date: '-',
-    username: '',
-    user_group: 'Группа1'
-  },
-  {
-    creation_date: '2022-04-22',
-    inspire_date: '2024-05-11',
-    username: 'user2222',
-    user_group: ''
-  },
-]
+const tableData = ref([])
+
+onMounted(() => {
+  axios.get("http://localhost:8081/app/creator/permissions", {headers: authHeader()})
+      .then((response) => {
+        tableData.value = response.data
+      })
+})
 </script>
 
 <style scoped>
