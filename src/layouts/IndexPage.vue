@@ -1,6 +1,6 @@
 <template>
   <HeaderComp></HeaderComp>
-  <div class="main-container p-14 py-20">
+  <div class="pt-11">
     <RouterView />
   </div>
 </template>

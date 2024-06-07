@@ -1,31 +1,36 @@
 <template>
-  <div class="bg-white w-96 min-h-52 h-fit p-4 rounded-md">
-    <el-form
-        label-position="top"
-        label-width="auto"
-        :model="form"
-    >
-      <el-form-item label="Логин">
-        <el-input v-model="form.username" />
-      </el-form-item>
-      <el-form-item label="Пароль">
-        <el-input v-model="form.password" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="auth">
-          Войти
-        </el-button>
-      </el-form-item>
-    </el-form>
+  <div class="flex place-content-center">
+    <div class="bg-white w-96 min-h-52 h-fit p-4 rounded-md">
+      <el-form
+          label-position="top"
+          label-width="auto"
+          :model="form"
+      >
+        <el-form-item label="Логин">
+          <el-input v-model="form.username" />
+        </el-form-item>
+        <el-form-item label="Пароль">
+          <el-input type="password" v-model="form.password" />
+        </el-form-item>
+        <el-text class="mx-1" type="danger">{{message}}</el-text>
+        <p class="underline-offset-2"><a class="text-blue-500" href="user/restorePas">Восстановить пароль</a></p>
+        <el-form-item>
+          <el-button class="mt-3" type="primary" @click="auth">
+            Войти
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import {reactive, ref} from 'vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
 import { useRouter } from "vue-router";
 
+const message = ref('')
 const store = useStore()
 const router = useRouter()
 const form = reactive({
@@ -44,7 +49,6 @@ const auth = () => {
         Authorization: "Bearer " + response.data.token
       }
     }).then((response) => {
-      store.commit("setUser", response.data)
       if(response.data.role === "ADMIN") {
         router.push("/admin")
       } else if(response.data.role === "CREATOR") {
@@ -52,11 +56,13 @@ const auth = () => {
       } else {
         router.push("/")
       }
+    }).catch(() => {
     })
 
   })
   .catch(function (error) {
     console.log(error);
+    message.value = "При входе произошла ошибка, проверьте логин и пароль"
   });
 }
 </script>

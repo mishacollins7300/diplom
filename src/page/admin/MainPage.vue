@@ -11,22 +11,24 @@
       </div>
 
       <div class="flex gap-4">
-        <el-button type="primary">Создать пользователя</el-button>
+        <el-button type="primary" @click="createUser">Создать пользователя</el-button>
         <el-button type="primary">Загрузить JSON с пользователями</el-button>
       </div>
 
       <div>
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="username" label="Логин" />
-          <el-table-column prop="fullname" label="ФИО" />
-          <el-table-column prop="mail" label="Почта" />
-          <el-table-column prop="role" label="Роль" />
-          <el-table-column prop="status" label="Статус" />
+          <el-table-column prop="username" label="Логин"/>
+          <el-table-column prop="fullname" label="ФИО"/>
+          <el-table-column prop="mail" label="Почта"/>
+          <el-table-column prop="role" label="Роль"/>
+          <el-table-column prop="status" label="Статус"/>
           <el-table-column fixed="right" label="Действия" prop="blocked" width="300">
             <template #default="scope">
               <el-button link type="primary" @click="editUser(scope.row.id)" size="small">Изменить</el-button>
               <el-button link type="primary" size="small">Удалить</el-button>
-              <el-button link type="primary" @click="blockUser(scope.row.id)" size="small">{{ scope.row.blocked ? 'Разблокирвать' : 'Заблокировать' }}</el-button>
+              <el-button link type="primary" @click="blockUser(scope.row.id)" size="small">
+                {{ scope.row.blocked ? 'Разблокирвать' : 'Заблокировать' }}
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -42,7 +44,6 @@ import authHeader from "@/app/auth-header";
 import {useRouter} from "vue-router";
 
 const router = useRouter()
-
 const searchInput = ref('')
 const tableData = ref([]);
 
@@ -51,6 +52,12 @@ const searchUser = () => {
       .then((response) => {
         tableData.value = response.data
       })
+}
+
+const createUser = () => {
+  router.push({
+    name: "userCreatePage"
+  })
 }
 
 const getUsers = () => {
@@ -73,7 +80,7 @@ const blockUser = (id) => {
 
 const editUser = (userId) => {
   router.push({
-    name:"userEditPage",
+    name: "userEditPage",
     query: {userId: userId}
   })
 }

@@ -5,6 +5,37 @@
     <div class="flex flex-col gap-5 items-center">
       <p class="text-3xl">Редактирование пользователя user1111</p>
 
+      <div class="w-52 h-52" v-if="user.imageUrl">
+        <img class="object-cover" :src="'http://localhost:8081/image/'+ user.imageUrl" alt="">
+      </div>
+
+<!--      <form method="post" :action="'http://localhost:8081/upload/user/' + user.id" enctype="multipart/form-data">-->
+<!--        <div class="form-group">-->
+<!--          <input type="file" name="file" accept="image/*" class="form-control-file">-->
+<!--        </div>-->
+<!--        <button type="submit" @click="loadImage" class="btn btn-primary">Upload image</button>-->
+<!--      </form>-->
+
+      <div class="flex gap-4">
+        <el-text class="mx-1" size="large">Фото профиля</el-text>
+        <el-upload
+            class="upload-demo"
+            :action="'http://localhost:8081/upload/user/' + user.id"
+            :auto-upload="true"
+            :multiple="false"
+            limit="1"
+            accept="image/*"
+            type="file"
+            :on-success="()=>{router.go();}"
+        >
+          <el-button type="primary">Выберите изображение</el-button>
+
+          <!--          <el-button class="ml-3" type="success" @click.stop="test">-->
+          <!--            upload to server-->
+          <!--          </el-button>-->
+        </el-upload>
+      </div>
+
       <div class="flex gap-4">
         <el-text class="mx-1" size="large">Логин</el-text>
         <el-input v-model="user.username" style="width: 300px"></el-input>
@@ -33,20 +64,6 @@
       </div>
 
       <div class="flex gap-4">
-        <el-text class="mx-1" size="large">Фото профиля</el-text>
-        <el-upload
-            class="avatar-uploader"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-        >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar"/>
-          <el-icon v-else class="avatar-uploader-icon">
-            <Plus/>
-          </el-icon>
-        </el-upload>
-      </div>
-
-      <div class="flex gap-4">
         <el-text class="mx-1" size="large">Статус</el-text>
         <el-input
             v-model="user.status"
@@ -70,12 +87,8 @@ import axios from "axios";
 import authHeader from "@/app/auth-header";
 
 const user = ref({})
-const imageUrl = ref('')
 const router = useRouter()
-
-const handleAvatarSuccess = (uploadFile) => {
-  imageUrl.value = URL.createObjectURL(uploadFile.raw)
-}
+// const uploadRef = ref()
 
 onMounted(() => {
   console.log(router)
@@ -85,12 +98,20 @@ onMounted(() => {
       })
 })
 
+
+const selectedFile = ref({})
 const editUser = () => {
+  user.value.image = selectedFile
   axios.put("http://localhost:8081/app/user", user.value, {headers: authHeader()})
       .then((response) => {
         user.value = response.data
       })
 }
+
+// const test = (uploadFile, uploadFiles) => {
+//   uploadRef.value = uploadFiles
+//   selectedFile.value = uploadFiles[0];
+// }
 
 const options = [
   {
@@ -109,6 +130,31 @@ const options = [
 
 </script>
 
-<style scoped>
+<style>
+   .avatar-uploader .avatar {
+     width: 178px;
+     height: 178px;
+     display: block;
+   }
 
+ .avatar-uploader .el-upload {
+   border: 1px dashed var(--el-border-color);
+   border-radius: 6px;
+   cursor: pointer;
+   position: relative;
+   overflow: hidden;
+   transition: var(--el-transition-duration-fast);
+ }
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
 </style>
