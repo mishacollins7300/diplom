@@ -1,19 +1,21 @@
 <template>
   <div class="py-5">
 
-    <div class="flex text-5xl mb-10">Плейлист "Плейлист1"</div>
+    <div class="flex text-5xl mb-10">Плейлист "{{ playlist.name }}"</div>
 
-    <div class="flex text-2xl mb-10">Первый плейлист</div>
+    <div class="flex text-2xl mb-10">{{ playlist.description }}</div>
 
-    <el-button type="primary" @click="() => console.log(4 )">Загрузить видеозапись</el-button>
+    <el-button type="primary"
+               @click="router.push({path: '/creator/create-video'})">
+      Добавить видеозапись
+    </el-button>
 
     <div class="flex gap-4 mt-5">
-      <el-input style="width: 400px" v-model="name"/>
-      <el-button type="primary" style="width: 100px" @click="() => console.log(4 )">Поиск</el-button>
-      <el-button type="primary" style="width: 150px" @click="() => console.log(4 )">Сбросить поиск</el-button>
+      <el-input style="width: 400px" v-model="search"/>
+      <el-button type="primary" style="width: 100px" @click="searchVideo">Поиск</el-button>
     </div>
 
-    <div class="flex text-2xl mt-10">Видеозаписи</div>
+    <div class="flex text-2xl mt-10">Видеозаписи:</div>
 
     <VideoCart
         v-for="(elem, index) in videos"
@@ -25,30 +27,36 @@
 
 <script setup>
 import VideoCart from "@/components/VideoCart.vue";
+import {onMounted, ref} from "vue";
+import axios from "axios";
+import authHeader from "@/app/auth-header";
+import {useRoute, useRouter} from "vue-router";
 
-const videos = [
-  {
-    name: "Видеозапись1",
-    description: "Первая видеозапись",
-    image_url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-    creation_date: "2022-04-22",
-    count: "2"
-  },
-  {
-    name: "Видеозапись2",
-    description: "Вторая видеозапись",
-    image_url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-    creation_date: "2022-04-22",
-    count: "0"
-  },
-  {
-    name: "Видеозапись3",
-    description: "Третяя видеозапись",
-    image_url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-    creation_date: "2022-04-22",
-    count: "0"
-  }
-]
+const router = useRouter()
+const route = useRoute();
+const playlist = ref({})
+const search = ref('')
+const videos = ref([])
+
+onMounted(() => {
+  const id = route.query.id
+  axios.get("http://localhost:8081/app/playlists/" + id, {headers: authHeader()})
+      .then((response) => {
+        playlist.value = response.data
+      })
+  axios.get("http://localhost:8081/app/videos?playlistId=" + id + "&search=" + search.value, {headers: authHeader()})
+      .then((response) => {
+        videos.value = response.data
+      })
+})
+
+const searchVideo = () => {
+  const id = route.query.id
+  axios.get("http://localhost:8081/app/videos?playlistId=" + id + "&search=" + search.value, {headers: authHeader()})
+      .then((response) => {
+        videos.value = response.data
+      })
+}
 </script>
 
 <style scoped>

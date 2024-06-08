@@ -22,7 +22,7 @@
               Удалить
             </el-button>
             <el-button link type="primary" size="small"
-                       @click="router.push({name: '/creator/update-playlist',query: {id: scope.row.id}})">
+                       @click="router.push({name: 'update-playlist',query: {id: scope.row.id}})">
               Изменить
             </el-button>
             <el-button link type="primary" size="small"
@@ -30,7 +30,7 @@
               Статистика
             </el-button>
             <el-button link type="primary" size="small"
-                       @click="router.push({name: '/creator/permission-list',query: {playlistId: scope.row.id}})">
+                       @click="router.push({name: 'permission-list',query: {playlistId: scope.row.id}})">
               Доступы
             </el-button>
           </template>
