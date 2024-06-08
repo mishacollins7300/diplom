@@ -98,7 +98,7 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import axios from "axios";
 import authHeader from "@/app/auth-header";
 import {useRouter} from "vue-router";
@@ -123,11 +123,11 @@ const date = ref('')
 const type = ref('')
 const options = [
   {
-    value: 'USER',
+    value: 'user',
     label: 'Пользователь'
   },
   {
-    value: 'GROUP',
+    value: 'group',
     label: 'Группа'
   }
 ];

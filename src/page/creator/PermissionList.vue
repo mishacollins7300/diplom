@@ -3,8 +3,8 @@
     <div class="flex text-2xl mb-10">Доступы к плейлисту "Плейлист1"</div>
     <div class="flex flex-col gap-3">
       <div class="flex gap-4">
-        <el-input v-model="name"/>
-        <el-button type="primary" @click="() => console.log(4 )">Поиск</el-button>
+        <el-input v-model="search"/>
+        <el-button type="primary" @click="searchPermissions">Поиск</el-button>
       </div>
       <div class="flex gap-4">
         <el-button type="primary" @click="() => router.push({ path: '/creator/create-permission' })">Создать</el-button>
@@ -33,18 +33,28 @@
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import authHeader from "@/app/auth-header";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 
+const route = useRoute();
 const router = useRouter()
-const name = ref('')
+const search = ref('')
 const tableData = ref([])
 
 onMounted(() => {
-  axios.get("http://localhost:8081/app/creator/permissions", {headers: authHeader()})
+  const playlistId = route.query.playlistId
+  axios.get("http://localhost:8081/app/creator/permissions?playlistId=" + playlistId, {headers: authHeader()})
       .then((response) => {
         tableData.value = response.data
       })
 })
+
+const searchPermissions = () => {
+  const playlistId = route.query.playlistId
+  axios.get("http://localhost:8081/app/creator/permissions?playlistId=" + playlistId + "&search=" + search.value, {headers: authHeader()})
+      .then((response) => {
+        tableData.value = response.data
+      })
+}
 </script>
 
 <style scoped>

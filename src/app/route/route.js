@@ -9,6 +9,7 @@ import CreatePlaylist from "@/page/creator/CreatePlaylist";
 import UpdateGroupPage from "@/page/creator/UpdateGroup";
 import PlaylistList from "@/page/creator/PlaylistList.vue";
 import PlaylistPage from "@/page/creator/PlaylistPage.vue";
+import UpdatePlaylist from "@/page/creator/UpdatePlaylist.vue";
 import CreateVideo from "@/page/creator/CreateVideo.vue";
 import UpdateVideo from "@/page/creator/UpdateVideo.vue";
 import PermissionList from "@/page/creator/PermissionList.vue";
@@ -89,6 +90,14 @@ const router = createRouter({
             path: '/creator/create-playlist',
             name: 'create-playlist',
             component: CreatePlaylist,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/creator/update-playlist',
+            name: 'update-playlist',
+            component: UpdatePlaylist,
             meta: {
                 layout: 'CreatorLayout'
             }

@@ -12,7 +12,7 @@
               <router-link to="/recomended-curce">Группы пользователей</router-link>
             </el-button>
             <el-button text>
-              <router-link to="/recomended-curce">Плейлисты</router-link>
+              <router-link to="/creator/playlist-list">Плейлисты</router-link>
             </el-button>
             <el-button text>
               <router-link to="/recomended-curce">Статистика</router-link>
