@@ -49,8 +49,7 @@ const form = reactive({
   description: '',
 })
 
-const fileList = [
-  ]
+const fileList = []
 
 const empty = []
 </script>

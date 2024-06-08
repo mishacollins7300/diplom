@@ -6,10 +6,7 @@
 
           <div v-if="role==='CREATOR'">
             <el-button text>
-              <router-link to="/recomended-curce">Главная</router-link>
-            </el-button>
-            <el-button text>
-              <router-link to="/recomended-curce">Группы пользователей</router-link>
+              <router-link to="/creator/user-group">Группы пользователей</router-link>
             </el-button>
             <el-button text>
               <router-link to="/creator/playlist-list">Плейлисты</router-link>

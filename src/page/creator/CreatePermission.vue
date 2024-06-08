@@ -98,7 +98,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import axios from "axios";
 import authHeader from "@/app/auth-header";
 import {useRouter} from "vue-router";

@@ -9,12 +9,8 @@
 
   <video width="500px" class="mt-4"
          height="400px"
-         controls="controls">
-    <source
-        src=
-            "https://media.geeksforgeeks.org/wp-content/uploads/20231020155223/
-Full-Stack-Development-_-LIVE-Classes-_-GeeksforGeeks.mp4"
-        type="video/mp4"/>
+         src="http://localhost:8081/app/video/fdfd"
+         controls preload="none">
   </video>
 
   <p class="text-xl mt-3">Таймкоды</p>
