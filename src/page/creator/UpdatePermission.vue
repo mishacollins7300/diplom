@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-10">
     <p class="text-3xl">Создание доступа к плейлисту "Плейлист1"</p>
 
     <el-form :model="form" class="mt-4" label-width="auto" style="max-width: 600px" label-position="top">
