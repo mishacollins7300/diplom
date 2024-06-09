@@ -1,5 +1,5 @@
 <template>
-  <div class="py-5">
+  <div class="p-10">
     <div class="flex text-2xl mb-10">Создание группы пользователей</div>
     <el-form label-width="auto" style="max-width: 600px" label-position="top">
       <el-form-item label="Название группы">
@@ -24,9 +24,9 @@
           <el-table-column prop="username" label="Логин" width="180"/>
           <el-table-column prop="fullname" label="ФИО" width="180"/>
           <el-table-column label="Действие">
-            <template #default>
+            <template #default="scope">
               <el-button link type="primary" size="small" @click="addUser(scope.row.id)">
-                {{ tableDataAdded.value.filter((c) => c.id === scope.row.id).length === 0 ? 'Добавить' : '-' }}
+                Добавить
               </el-button>
             </template>
           </el-table-column>
@@ -34,16 +34,13 @@
       </div>
     </div>
 
-    <el-button type="primary" size="small">
-      Загрузить json с пользователями
-    </el-button>
     <div class="flex flex-col gap-3 mt-3">
       Добавленные пользователи
       <el-table :data="tableDataAdded" style="width: 100%">
         <el-table-column prop="username" label="Логин" width="180"/>
         <el-table-column prop="fullname" label="ФИО" width="180"/>
         <el-table-column label="Действие">
-          <template #default>
+          <template #default="scope">
             <el-button link type="primary" size="small" @click="deleteUser(scope.row.id)">
               Удалить
             </el-button>
@@ -51,7 +48,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-button type="primary" size="small" @click="saveGroup">
+    <el-button type="primary" class="mt-5" @click="saveGroup">
       Сохранить
     </el-button>
   </div>
@@ -71,11 +68,11 @@ const tableDataAdded = ref([])
 const tableData = ref([])
 
 const saveGroup = () => {
-  const group = ref({})
-  group.value.name = name.value
-  group.value.description = description.value
-  group.value.users = tableDataAdded.value.map((c) => c.id)
-  axios.post("http://localhost:8081/app/group", group.value, {headers: authHeader()})
+  const group = {}
+  group.name = name.value
+  group.description = description.value
+  group.users = tableDataAdded.value.map((c) => c.id)
+  axios.post("http://localhost:8081/app/group", group, {headers: authHeader()})
       .then(() => {
         router.go(-1)
       })
@@ -93,8 +90,8 @@ const searchUser = () => {
 }
 
 const addUser = (id) => {
-  if (tableDataAdded.value.filter((c) => c.id === id).length === 0) {
-    tableDataAdded.value.push(tableData.value.filter((c) => c.id === id))
+  if (tableDataAdded.value.filter((c) => c.id === id).length < 1) {
+    tableDataAdded.value.push(tableData.value.filter((c) => c.id === id)[0])
   }
 }
 </script>

@@ -17,11 +17,20 @@ import CreatePermission from "@/page/creator/CreatePermission.vue";
 import UpdatePermission from "@/page/creator/UpdatePermission.vue";
 import StatisticsByPlaylist from "@/page/creator/StatisticsByPlaylist.vue";
 import StatisticsByGroup from "@/page/creator/StatisticsByGroup.vue";
+import UpdateProfile from "@/page/user/UpdateProfile.vue";
 import {createRouter, createWebHistory} from 'vue-router'
 
 const router = createRouter({
     history: createWebHistory(""),
     routes: [
+        {
+            path: '/profile/update',
+            name: 'update-profile',
+            component: UpdateProfile,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
         {
             path: '/admin',
             name: 'mainPage',

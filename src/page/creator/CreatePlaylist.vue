@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="p-10 flex flex-col gap-4">
 
     <p class="text-3xl">Создание плейлиста</p>
 

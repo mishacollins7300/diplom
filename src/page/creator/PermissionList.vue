@@ -37,7 +37,7 @@ import authHeader from "@/app/auth-header";
 import {useRoute, useRouter} from "vue-router";
 
 const title = ref('Список доступов')
-const route = useRoute();
+const route = useRoute()
 const router = useRouter()
 const search = ref('')
 const tableData = ref([])

@@ -33,10 +33,10 @@
       <template #extra>
         <div class="flex items-center gap-4">
           <el-button text>
-            <router-link to="/profile">{{ user.username }}</router-link>
+            <router-link :to="'/profile/update?id=' + user.id">{{ user.username }}</router-link>
           </el-button>
           <div class="w-10 h-10">
-            <img class="object-cover" :src="'http://localhost:8081/image/'+ user.imageUrl" alt="">
+            <img class="object-cover w-full h-full" :src="'http://localhost:8081/image/'+ user.imageUrl" alt="">
           </div>
           <el-button @click="test">Выйти</el-button>
         </div>

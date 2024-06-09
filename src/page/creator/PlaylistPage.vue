@@ -1,21 +1,20 @@
 <template>
-  <div class="py-5">
+  <div class="p-10">
 
     <div class="flex text-5xl mb-10">Плейлист "{{ playlist.name }}"</div>
 
     <div class="flex text-2xl mb-10">{{ playlist.description }}</div>
 
-    <el-button type="primary"
-               @click="router.push({path: '/creator/create-video'})">
-      Добавить видеозапись
-    </el-button>
+    <div class="flex text-2xl mt-10">Видеозаписи:</div>
 
     <div class="flex gap-4 mt-5">
       <el-input style="width: 400px" v-model="search"/>
       <el-button type="primary" style="width: 100px" @click="searchVideo">Поиск</el-button>
+      <el-button type="primary"
+                 @click="router.push({name: 'create-video', query: {playlistId:route.query.id}})">
+        Добавить видеозапись
+      </el-button>
     </div>
-
-    <div class="flex text-2xl mt-10">Видеозаписи:</div>
 
     <VideoCart
         v-for="(elem, index) in videos"
@@ -33,7 +32,7 @@ import authHeader from "@/app/auth-header";
 import {useRoute, useRouter} from "vue-router";
 
 const router = useRouter()
-const route = useRoute();
+const route = useRoute()
 const playlist = ref({})
 const search = ref('')
 const videos = ref([])

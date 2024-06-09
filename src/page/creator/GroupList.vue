@@ -1,5 +1,5 @@
 <template>
-  <div class="py-5">
+  <div class="p-10">
     <div class="flex text-2xl mb-10">Список группы пользователей</div>
     <div class="flex flex-col gap-3">
       <div class="flex gap-4">
@@ -62,8 +62,8 @@ const deleteGroup = (groupId) => {
   axios.delete("http://localhost:8081/app/group?id=" + groupId, {headers: authHeader()})
       .then((response) => {
         tableData.value = response.data
+        getGroups()
       })
-  getGroups()
 }
 
 const getGroups = () => {

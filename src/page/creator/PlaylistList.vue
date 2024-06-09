@@ -1,5 +1,5 @@
 <template>
-  <div class="py-5">
+  <div class="p-10">
     <div class="flex text-2xl mb-10">Список плейлистов</div>
     <div class="flex flex-col gap-3">
       <div class="flex gap-4">
@@ -9,11 +9,11 @@
       </div>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="name" label="Название" width="180"/>
-        <el-table-column prop="description" label="Описание" width="180"/>
+        <el-table-column prop="description" label="Описание" width="300"/>
         <el-table-column prop="videoCount" label="Кол-во видеозаписей" width="180"/>
         <el-table-column prop="creationDate" label="Дата создания" width="180"/>
         <el-table-column label="Действие">
-          <template #default>
+          <template #default="scope">
             <el-button link type="primary" size="small"
                        @click="router.push({name: 'playlist',query: {id: scope.row.id}})">
               Перейти
@@ -29,7 +29,7 @@
                        @click="router.push({name: 'playlist-statistic',query: {id: scope.row.id}})">
               Статистика
             </el-button>
-            <el-button link type="primary" size="small"
+            <el-button v-if="scope.row.isPublic === false" link type="primary" size="small"
                        @click="router.push({name: 'permission-list',query: {playlistId: scope.row.id}})">
               Доступы
             </el-button>
