@@ -20,22 +20,7 @@
     <p class="text-xl mt-3">Таймкоды</p>
 
     <div class="mt-2" v-for="(timeCode, index) in video.timeCodes" :key="index">
-      <TimeCodeComponent :data="timeCode"></TimeCodeComponent>
-    </div>
-    <div>
-      <el-button class="mt-1" type="success" @click="addTimeCode">+</el-button>
-    </div>
-
-    <div :hidden="hidden.value" class="flex gap-3 mt-4" style="width: 450px">
-      <div class="w-2/12">
-        <el-input v-model="time"/>
-      </div>
-      <div class="w-8/12">
-        <el-input v-model="description"/>
-      </div>
-      <div class="w-2/12">
-        <el-button type="primary" @click="saveTimeCode">Сохранить</el-button>
-      </div>
+      <EmployeeTimeCodeComponent :data="timeCode"></EmployeeTimeCodeComponent>
     </div>
 
     <p class="text-xl mt-3">Комментарии</p>
@@ -52,7 +37,7 @@
 
 <script setup>
 import CommentComponent from '@/components/CommentComponent'
-import TimeCodeComponent from '@/components/TimeCodeComponent'
+import EmployeeTimeCodeComponent from '@/components/EmployeeTimeCodeComponent.vue'
 import {onMounted, ref} from 'vue'
 import axios from "axios";
 import authHeader from "@/app/auth-header";
@@ -61,9 +46,6 @@ import {useRoute} from "vue-router";
 const route = useRoute()
 const video = ref({})
 const commentText = ref("")
-const hidden = ref(true)
-const time = ref("")
-const description = ref("")
 
 onMounted(() => {
   const id = route.query.id
@@ -72,28 +54,8 @@ onMounted(() => {
         video.value = response.data
         console.log(video.value)
       })
+  axios.post("http://localhost:8081/app/visits?videoId=" + id, null, {headers: authHeader()})
 })
-
-const addTimeCode = () => {
-  hidden.value = false
-  time.value = document.getElementById("video").currentTime.toFixed()
-}
-
-const saveTimeCode = () => {
-  const body = {}
-  body.time = time.value
-  body.description = description.value
-  body.videoId = video.value.id
-  axios.post("http://localhost:8081/app/timecodes", body, {headers: authHeader()})
-      .then(() => {
-        time.value = ""
-        description.value = ""
-        axios.get("http://localhost:8081/app/timecodes/video/" + video.value.id, {headers: authHeader()})
-            .then((response) => {
-              video.value.timeCodes = response.data
-            })
-      })
-}
 
 const saveComment = () => {
   const body = {}

@@ -54,7 +54,7 @@ const auth = () => {
       } else if(response.data.role === "CREATOR") {
         router.push("/creator/user-group")
       } else {
-        router.push("/")
+        router.push("/employee/recomendations")
       }
     }).catch(() => {
     })

@@ -2,13 +2,13 @@
   <div>
     <div class="border border-solid border-slate-600 flex gap-4">
       <div class="w-10 h-10">
-        <img class="object-cover" :src="'http://localhost:8081/image/'+ user.imageUrl" alt="">
+        <img class="object-cover" :src="'http://localhost:8081/image/'+ props.comment.user.imageUrl" alt="">
       </div>
       <div class="p-2">
         <div>
-          <p>{{ props.comment.user }}</p>
+          <p>{{ props.comment.user.name }}</p>
         </div>
-        {{ props.comment?.text }}
+        {{ props.comment.text }}
         <el-button
             type="primary"
             link

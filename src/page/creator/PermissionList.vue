@@ -1,5 +1,5 @@
 <template>
-  <div class="py-5">
+  <div class="p-10">
     <div class="flex text-2xl mb-10">{{ title.value }}</div>
     <div class="flex flex-col gap-3">
       <div class="flex gap-4">
@@ -52,7 +52,11 @@ onMounted(() => {
         })
     title.value = 'Список доступов к плейлисту ' + playlistName.value
   }
-  axios.get("http://localhost:8081/app/creator/permissions?playlistId=" + playlistId, {headers: authHeader()})
+  const url = ref('"http://localhost:8081/app/creator/permissions?playlistId="')
+  if (playlistId) {
+    url.value = url.value + playlistId
+  }
+  axios.get(url.value, {headers: authHeader()})
       .then((response) => {
         tableData.value = response.data
       })

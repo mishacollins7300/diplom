@@ -4,7 +4,7 @@ import UserUpdatePage from '@/page/admin/UserUpdatePage'
 import LoginPage from '@/page/LoginPage'
 import CreateGroup from "@/page/creator/CreateGroup";
 import UserGroup from "@/page/creator/GroupList.vue";
-import VideoView from "@/page/creator/VideoView";
+import VideoView from "@/page/creator/VideoView.vue";
 import CreatePlaylist from "@/page/creator/CreatePlaylist";
 import UpdateGroupPage from "@/page/creator/UpdateGroup";
 import PlaylistList from "@/page/creator/PlaylistList.vue";
@@ -18,11 +18,48 @@ import UpdatePermission from "@/page/creator/UpdatePermission.vue";
 import StatisticsByPlaylist from "@/page/creator/StatisticsByPlaylist.vue";
 import StatisticsByGroup from "@/page/creator/StatisticsByGroup.vue";
 import UpdateProfile from "@/page/user/UpdateProfile.vue";
+
+import GroupList from "@/page/employee/GroupList.vue";
+import History from "@/page/employee/HistoryPage.vue";
+import Recomendations from "@/page/employee/RecomendationsPage.vue";
+import VideoPage from "@/page/employee/VideoView.vue";
 import {createRouter, createWebHistory} from 'vue-router'
 
 const router = createRouter({
     history: createWebHistory(""),
     routes: [
+        {
+            path: '/employee/groups',
+            name: 'groups',
+            component: GroupList,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/employee/recomendations',
+            name: 'recomendations',
+            component: Recomendations,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/employee/history',
+            name: 'history',
+            component: History,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/employee/video-page',
+            name: 'video-page',
+            component: VideoPage,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
         {
             path: '/profile/update',
             name: 'update-profile',

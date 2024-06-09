@@ -171,7 +171,8 @@ const searchPlaylists = () => {
   axios.get("http://localhost:8081/app/permissions/playlists?search=" + search.value,
       {headers: authHeader()})
       .then((response) => {
-        tableData.value = response.data
+        console.log(response.data)
+        tableDataPlaylists.value = response.data
       })
 }
 

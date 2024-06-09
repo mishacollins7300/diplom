@@ -19,7 +19,17 @@
             </el-button>
           </div>
 
-          <div v-if="role==='USER'"></div>
+          <div v-if="role==='USER'">
+            <el-button text>
+              <router-link to="/employee/recomendations">Рекомендации</router-link>
+            </el-button>
+            <el-button text>
+              <router-link to="/employee/groups">Группы</router-link>
+            </el-button>
+            <el-button text>
+              <router-link to="/employee/history">История просмотра</router-link>
+            </el-button>
+          </div>
 
           <div v-if="role==='ADMIN'">
             <el-button text>
@@ -68,7 +78,6 @@ onMounted(() => {
         store.commit("setUser", response.data)
         role.value = response.data.role
         user.value = response.data
-        console.log(user.value)
       }).catch(() => {
   })
 })

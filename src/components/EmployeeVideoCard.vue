@@ -8,30 +8,19 @@
     <div>Количество просмотров - {{ props.data.count }}</div>
     <div class="flex gap-4 mt-3">
       <el-button type="primary" style="width: 100px"
-                 @click="router.push({name: 'video',query: {id: props.data.id}})">
+                 @click="router.push({name: 'video-page',query: {id: props.data.id}})">
         Перейти
       </el-button>
-      <el-button type="primary" style="width: 100px" @click="deleteVideo">Удалить</el-button>
-      <el-button type="primary" style="width: 100px"
-                 @click="router.push({name: 'update-video',query: {id: props.data.id}})">
-        Изменить
-      </el-button>
+
     </div>
   </div>
 </template>
 
 <script setup>
 import {defineProps} from "vue";
-import axios from "axios";
-import authHeader from "@/app/auth-header";
 import {useRouter} from "vue-router";
 
 const router = useRouter()
-
-const deleteVideo = () => {
-  axios.delete("http://localhost:8081/app/video/" + props.data.id, {headers: authHeader()})
-  router.go();
-}
 
 const props = defineProps({
   data: {
