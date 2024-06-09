@@ -1,6 +1,6 @@
 <template>
   <div class="m-10">
-    <p class="text-3xl">Создание доступа к плейлисту "Плейлист1"</p>
+    <p class="text-3xl">Создание доступа {{ messageMain.value }}</p>
 
     <el-form class="mt-4" label-width="auto" style="max-width: 600px" label-position="top">
       <el-form-item>
@@ -103,6 +103,7 @@ import axios from "axios";
 import authHeader from "@/app/auth-header";
 import {useRouter} from "vue-router";
 
+const messageMain = ref('')
 const router = useRouter()
 const search = ref('')
 const checkBox = ref(false)
