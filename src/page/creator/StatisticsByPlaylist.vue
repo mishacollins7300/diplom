@@ -1,29 +1,33 @@
 <template>
-  <div class="py-5">
-    <div class="flex text-2xl mb-10">Статистика по плейлисту "Плейлист1"</div>
+  <div class="p-10">
+    <div class="flex text-3xl mb-10">Статистика по плейлисту {{ playlist.name }}</div>
 
+    <p class="text-2xl mt-3">Описание</p>
 
-    <p class="text-1xl mt-3">Первый плейлист</p>
-    <p class="text-base mt-4">Всего видеозаписей - {{videos.length}}</p>
-    <p class="text-base mt-4">Видеоматериалы:</p>
+    <p class="text-base mt-3">{{ playlist.description }}</p>
 
-    <el-table :data="videos" style="width: 100%">
-      <el-table-column prop="name" label="Название видеозаписи" width="180" />
-      <el-table-column prop="watches" label="Кол-во просмотров" width="180" />
-      <el-table-column prop="comments" label="Кол-во комментариев" width="180">
-      </el-table-column>
+    <p class="text-2xl mt-5">Видеоматериалы</p>
+
+    <p class="text-base mt-3">Всего видеозаписей - {{ stat.videoCount }}</p>
+
+    <el-table :data="stat.videoResponses" class="mt-5" style="width: 100%">
+      <el-table-column prop="name" label="Название видеозаписи" width="180"/>
+      <el-table-column prop="description" label="Описание" width="300"/>
+      <el-table-column prop="visitCount" label="Кол-во просмотров" width="180"/>
+      <el-table-column prop="commentCount" label="Кол-во комментариев" width="180"/>
     </el-table>
 
-    <p class="text-base mt-4">Статистика просмотров:</p>
+    <p class="text-base mt-4">Статистика просмотров по доступам:</p>
 
-    <el-table :data="watches" style="width: 100%">
-      <el-table-column prop="username" label="Пользователь" width="180" />
-      <el-table-column prop="user_group" label="Группа пользователей" width="180" />
-      <el-table-column prop="video_name" label="Видеозапись" width="180">
+    <el-table :data="stat.stats" style="width: 100%">
+      <el-table-column prop="username" label="Пользователь" width="180"/>
+      <el-table-column prop="groupName" label="Группа пользователей" width="180"/>
+      <el-table-column label="Видеозапись" width="180">
         <template #default="scope">
-          <el-button link size="small" :type="scope.row.watched ? 'success' : 'danger'">{{
-              scope.row.video_name
-            }}</el-button>
+          <el-button link size="small" :type="scope.row.isWatched ? 'success' : 'danger'">{{
+              scope.row.videoName
+            }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -31,80 +35,27 @@
 </template>
 
 <script setup>
-const videos = [
-  {
-    name: 'Видеозапись1',
-    watches: '2',
-    comments: '2'
-  },
-  {
-    name: 'Видеозапись2',
-    watches: '0',
-    comments: '0'
-  },
-  {
-    name: 'Видеозапись3',
-    watches: '0',
-    comments: '0'
-  }
-];
+import {onMounted, ref} from "vue";
+import axios from "axios";
+import authHeader from "@/app/auth-header";
+import {useRoute} from "vue-router";
 
-const watches = [
-  {
-    username:"user1111",
-    user_group:"Группа1",
-    video_name:"Видеозапись1",
-    watched:true
-  },
-  {
-    username:"user1111",
-    user_group:"Группа1",
-    video_name:"Видеозапись2",
-    watched:false
-  },
-  {
-    username:"user1111",
-    user_group:"Группа1",
-    video_name:"Видеозапись3",
-    watched:false
-  },
-  {
-    username:"user2222",
-    user_group:"Группа1",
-    video_name:"Видеозапись1",
-    watched:true
-  },
-  {
-    username:"user2222",
-    user_group:"Группа1",
-    video_name:"Видеозапись2",
-    watched:false
-  },
-  {
-    username:"user2222",
-    user_group:"Группа1",
-    video_name:"Видеозапись3",
-    watched:false
-  },
-  {
-    username:"user3333",
-    user_group:"Группа1",
-    video_name:"Видеозапись1",
-    watched:false
-  },
-  {
-    username:"user3333",
-    user_group:"Группа1",
-    video_name:"Видеозапись2",
-    watched:false
-  },
-  {
-    username:"user3333",
-    user_group:"Группа1",
-    video_name:"Видеозапись3",
-    watched:false
-  }
-]
+const route = useRoute()
+const stat = ref({})
+const playlist = ref({})
+
+onMounted(() => {
+  const id = route.query.id
+  axios.get("http://localhost:8081/app/playlists/" + id, {headers: authHeader()})
+      .then((response) => {
+        playlist.value = response.data
+      })
+
+  axios.get("http://localhost:8081/app/stat/playlist/" + id, {headers: authHeader()})
+      .then((response) => {
+        stat.value = response.data
+      })
+})
 </script>
 
 <style scoped>
