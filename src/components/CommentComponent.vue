@@ -12,6 +12,7 @@
         <el-button
             type="primary"
             link
+            @click="otvetit(props.comment.id)"
         >
           Ответить
         </el-button>
@@ -24,6 +25,7 @@
           v-for="(child, index) in props.comment?.comments"
           :comment="child"
           :key="index"
+          @otvet="otvetit(child.comment.id)"
       >
       </CommentComponent>
     </div>
@@ -31,7 +33,7 @@
 </template>
 
 <script setup>
-import {defineProps} from 'vue'
+import {defineProps, defineEmits} from 'vue'
 import CommentComponent from '@/components/CommentComponent'
 
 const props = defineProps({
@@ -41,6 +43,12 @@ const props = defineProps({
     }
   }
 })
+
+const emits = defineEmits(['otvet'])
+
+const otvetit = (id) => {
+  emits('otvet', id)
+}
 </script>
 
 <style scoped>

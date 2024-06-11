@@ -29,6 +29,13 @@ const router = createRouter({
     history: createWebHistory(""),
     routes: [
         {
+            path: '/:pathMatch(.*)*',
+            component: LoginPage,
+            meta: {
+                layout: 'LoginPage'
+            }
+        },
+        {
             path: '/employee/groups',
             name: 'groups',
             component: GroupList,

@@ -20,7 +20,7 @@
     <p class="text-xl mt-3">Таймкоды</p>
 
     <div class="mt-2" v-for="(timeCode, index) in video.timeCodes" :key="index">
-      <TimeCodeComponent :data="timeCode"></TimeCodeComponent>
+      <TimeCodeComponent :data="timeCode" @delete="deleteTimeCode"></TimeCodeComponent>
     </div>
     <div>
       <el-button class="mt-1" type="success" @click="addTimeCode">+</el-button>
@@ -41,7 +41,7 @@
     <p class="text-xl mt-3">Комментарии</p>
 
     <div class="mt-2" v-for="(comm, index) in video.comments" :key="index">
-      <CommentComponent :comment="comm"></CommentComponent>
+      <CommentComponent :comment="comm" @otvet="otvet"></CommentComponent>
     </div>
     <div class="flex gap-4 w-96 mt-2">
       <el-input v-model="commentText"/>
@@ -65,15 +65,25 @@ const hidden = ref(true)
 const time = ref("")
 const description = ref("")
 
-onMounted(() => {
+const getVideoView = () => {
   const id = route.query.id
   axios.get("http://localhost:8081/app/videos/" + id, {headers: authHeader()})
       .then((response) => {
         video.value = response.data
-        console.log(video.value)
       })
+}
+onMounted(() => {
+  getVideoView()
 })
+const deleteTimeCode = (id) => {
+  video.value.timeCodes.map((item, index) => {
+    if(item.id === id) video.value.timeCodes.splice(index, 1)
+  })
+}
 
+const otvet = (id) => {
+  console.log(id)
+}
 const addTimeCode = () => {
   hidden.value = false
   time.value = document.getElementById("video").currentTime.toFixed()

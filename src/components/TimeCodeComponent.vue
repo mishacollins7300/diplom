@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import {defineProps} from "vue";
+import {defineProps,defineEmits} from "vue";
 import axios from "axios";
 import authHeader from "@/app/auth-header";
 
@@ -19,8 +19,9 @@ const props = defineProps({
     type: Object
   }
 })
-
+const emits = defineEmits(['delete', ''])
 const deleteTimecode = () => {
+  emits('delete', props.data.id)
   axios.delete("http://localhost:8081/app/timecodes/" + props.data.id, {headers: authHeader()})
 }
 </script>

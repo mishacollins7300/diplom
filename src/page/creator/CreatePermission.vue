@@ -1,6 +1,6 @@
 <template>
   <div class="m-10">
-    <p class="text-3xl">Создание доступа {{ messageMain.value }}</p>
+    <p class="text-3xl">Создание доступа {{ title }}</p>
 
     <el-form class="mt-4" label-width="auto" style="max-width: 600px" label-position="top">
       <el-form-item>
@@ -38,10 +38,10 @@
 
       <div class="flex flex-col gap-3 mt-3">
         Результаты поиска
-        <el-table :data="tableDataPlaylists" style="width: 100%">
-          <el-table-column prop="name" label="ФИО" width="180"/>
-          <el-table-column prop="address" label="Действие">
-            <template #default>
+        <el-table :data="tableDataPlaylists" style="width: 600px">
+          <el-table-column prop="name" label="Название плейлиста" width="400"/>
+          <el-table-column label="Действие">
+            <template #default="scope">
               <el-button link type="primary" size="small" @click="getPlaylist(scope.row.id)">
                 Выбрать
               </el-button>
@@ -52,7 +52,7 @@
     </div>
 
     <div>
-      <p class="text-2xl">Объект доступа</p>
+      <p class="text-2xl mt-4">Объект доступа</p>
 
       <div class="mt-4">
         {{ permissionObjectMessage.name }}
@@ -80,10 +80,10 @@
       <div class="flex flex-col gap-3 mt-3">
         Результаты поиска
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="date" label="Логин" width="180"/>
-          <el-table-column prop="name" label="ФИО" width="180"/>
-          <el-table-column prop="address" label="Действие">
-            <template #default>
+          <el-table-column prop="name" label="Имя" width="180"/>
+          <el-table-column prop="description" label="Информация" width="180"/>
+          <el-table-column label="Действие">
+            <template #default="scope">
               <el-button link type="primary" size="small" @click="getPermissionObject(scope.row.id)">
                 Выбрать
               </el-button>
@@ -103,7 +103,7 @@ import axios from "axios";
 import authHeader from "@/app/auth-header";
 import {useRouter} from "vue-router";
 
-const messageMain = ref('')
+const title = ref('')
 const router = useRouter()
 const search = ref('')
 const checkBox = ref(false)
@@ -111,12 +111,12 @@ const description = ref('')
 const tableData = ref([]);
 const permissionObject = ref({})
 const permissionObjectMessage = ref({
-  name: "",
+  name: "Выберите объект доступа",
   description: ""
 })
 const playlistMessage = ref({
-  name: "",
-  description: ""
+  name: "Выберите плейлист",
+  description: "-"
 })
 const playlist = ref({})
 const searchPlaylist = ref('')
@@ -144,20 +144,19 @@ const savePermission = () => {
     playlist_id: playlist.value.id
   }, {headers: authHeader()})
       .then(() => {
-        router.push({ path:'/creator/permission-list' });
+        router.push({path: '/creator/permission-list'});
       })
 }
 
 const getPlaylist = (id) => {
-  const object = tableDataPlaylists.value.filter((object) => object.id === id)
+  const object = tableDataPlaylists.value.filter((object) => object.id === id)[0]
   playlist.value = object
   playlistMessage.value.name = "Название плейлиста: " + object.name
   playlistMessage.value.description = "Описание плейлиста: " + object.description
-  tableDataPlaylists.value = []
 }
 
 const getPermissionObject = (id) => {
-  const object = tableData.value.filter((object) => object.id === id)
+  const object = tableData.value.filter((object) => object.id === id)[0]
   permissionObject.value = object
   if (object.type === 'group') {
     permissionObjectMessage.value.name = "Название группы: " + object.name
@@ -178,12 +177,13 @@ const searchPlaylists = () => {
 }
 
 const searchPermissionObjects = () => {
-  axios.get("http://localhost:8081/app/permissions/objects?search=" + search.value + "&type=" + type.value,
+  axios.get("http://localhost:8081/app/creator/permissions/objects?search=" + search.value + "&type=" + type.value,
       {headers: authHeader()})
       .then((response) => {
         tableData.value = response.data
       })
 }
+
 </script>
 
 <style scoped>
