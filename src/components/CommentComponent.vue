@@ -1,21 +1,26 @@
 <template>
   <div>
     <div class="border border-solid border-slate-600 flex gap-4">
-      <div class="w-10 h-10">
+      <div class="w-14 h-14">
         <img class="object-cover" :src="'http://localhost:8081/image/'+ props.comment.user.imageUrl" alt="">
       </div>
       <div class="p-2">
-        <div>
-          <p>{{ props.comment.user.name }}</p>
+        <div class="flex gap-1">
+          <div class="h-1/3">
+            <p class="text-sm">{{ props.comment.user.username }}</p>
+          </div>
+          <div class="h-2/3 flex gap-2">
+            <p class="text-base">{{ props.comment.text }}</p>
+            <div class="w-16">
+              <el-button
+                  type="primary"
+                  link
+                  @click="answ(props.comment.id)">
+                Ответить
+              </el-button>
+            </div>
+          </div>
         </div>
-        {{ props.comment.text }}
-        <el-button
-            type="primary"
-            link
-            @click="otvetit(props.comment.id)"
-        >
-          Ответить
-        </el-button>
       </div>
     </div>
     <div
@@ -25,7 +30,7 @@
           v-for="(child, index) in props.comment?.comments"
           :comment="child"
           :key="index"
-          @otvet="otvetit(child.comment.id)"
+          @change="eventChild"
       >
       </CommentComponent>
     </div>
@@ -44,10 +49,14 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['otvet'])
+const emits = defineEmits(['change'])
 
-const otvetit = (id) => {
-  emits('otvet', id)
+const eventChild = (event) => {
+  emits('change', event)
+}
+
+const answ = (id) => {
+  emits('change', {id:id, action:"ans"})
 }
 </script>
 
