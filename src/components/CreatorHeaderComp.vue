@@ -35,6 +35,9 @@
             <el-button text>
               <router-link to="/employee/personal">Персональные доступы</router-link>
             </el-button>
+            <el-button text>
+              <router-link to="/employee/creators">Наставники</router-link>
+            </el-button>
           </div>
 
           <div v-if="role==='ADMIN'">

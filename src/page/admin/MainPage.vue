@@ -12,7 +12,6 @@
 
       <div class="flex gap-4">
         <el-button type="primary" @click="createUser">Создать пользователя</el-button>
-        <el-button type="primary">Загрузить JSON с пользователями</el-button>
       </div>
 
       <div>

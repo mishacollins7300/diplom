@@ -3,7 +3,7 @@
     <p class="text-6xl text-center my-20">ADMIN CLIENT</p>
 
     <div class="flex flex-col gap-5 items-center">
-      <p class="text-3xl">Редактирование пользователя user1111</p>
+      <p class="text-3xl">Редактирование пользователя {{ username }}</p>
 
       <div class="w-52 h-52" v-if="user.imageUrl">
         <img class="object-cover w-full h-full" :src="'http://localhost:8081/image/'+ user.imageUrl" alt="">
@@ -76,11 +76,13 @@ import authHeader from "@/app/auth-header";
 
 const user = ref({})
 const router = useRouter()
+const username = ref('')
 
 onMounted(() => {
-  axios.get("http://localhost:8081/app/user?userId=" + router.currentRoute.value.query.userId, {headers: authHeader()})
+  axios.get("http://localhost:8081/app/user/" + router.currentRoute.value.query.userId, {headers: authHeader()})
       .then((response) => {
         user.value = response.data
+        username.value = response.data.username
       })
 })
 
@@ -88,6 +90,7 @@ const editUser = () => {
   axios.put("http://localhost:8081/app/user", user.value, {headers: authHeader()})
       .then((response) => {
         user.value = response.data
+        router.go(-1)
       })
 }
 
