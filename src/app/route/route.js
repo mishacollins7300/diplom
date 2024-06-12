@@ -26,6 +26,7 @@ import Recomendations from "@/page/employee/RecomendationsPage.vue";
 import VideoPage from "@/page/employee/VideoView.vue";
 import EmployeePlaylistList from "@/page/employee/PlaylistList.vue";
 import EmployeePlaylistPage from "@/page/employee/PlaylistPage.vue";
+import PersonalPermissions from "@/page/employee/PersonalPermissions.vue";
 
 import {createRouter, createWebHistory} from 'vue-router'
 
@@ -37,6 +38,14 @@ const router = createRouter({
             component: LoginPage,
             meta: {
                 layout: 'LoginPage'
+            }
+        },
+        {
+            path: '/employee/personal',
+            name: 'personal-permissions',
+            component: PersonalPermissions,
+            meta: {
+                layout: 'CreatorLayout'
             }
         },
         {
