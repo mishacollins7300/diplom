@@ -12,9 +12,6 @@
               <router-link to="/creator/playlist-list">Плейлисты</router-link>
             </el-button>
             <el-button text>
-              <router-link to="/recomended-curce">Статистика</router-link>
-            </el-button>
-            <el-button text>
               <router-link to="/creator/permission-list">Доступы</router-link>
             </el-button>
           </div>
