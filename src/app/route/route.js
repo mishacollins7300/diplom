@@ -20,9 +20,13 @@ import StatisticsByGroup from "@/page/creator/StatisticsByGroup.vue";
 import UpdateProfile from "@/page/user/UpdateProfile.vue";
 
 import GroupList from "@/page/employee/GroupList.vue";
+import GroupPage from "@/page/employee/GroupPage.vue";
 import History from "@/page/employee/HistoryPage.vue";
 import Recomendations from "@/page/employee/RecomendationsPage.vue";
 import VideoPage from "@/page/employee/VideoView.vue";
+import EmployeePlaylistList from "@/page/employee/PlaylistList.vue";
+import EmployeePlaylistPage from "@/page/employee/PlaylistPage.vue";
+
 import {createRouter, createWebHistory} from 'vue-router'
 
 const router = createRouter({
@@ -39,6 +43,30 @@ const router = createRouter({
             path: '/employee/groups',
             name: 'groups',
             component: GroupList,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/employee/group',
+            name: 'employee-group',
+            component: GroupPage,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/employee/playlist-page',
+            name: 'employee-playlist-page',
+            component: EmployeePlaylistPage,
+            meta: {
+                layout: 'CreatorLayout'
+            }
+        },
+        {
+            path: '/employee/playlists',
+            name: 'employee-playlists',
+            component: EmployeePlaylistList,
             meta: {
                 layout: 'CreatorLayout'
             }

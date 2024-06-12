@@ -14,7 +14,7 @@
     <p class="text-2xl mt-2">Описание:</p>
     <p class="text-base mt-3">{{ video.description }}</p>
 
-    <p class="text-xl mt-3">Таймкоды</p>
+    <p class="text-xl mt-3">Таймкоды:</p>
 
     <div class="mt-2" v-for="(timeCode, index) in video.timeCodes" :key="index">
       <TimeCodeComponent :data="timeCode" @change="clickTimeCode"></TimeCodeComponent>
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <p class="text-xl mt-3">Комментарии</p>
+    <p class="text-xl mt-3">Комментарии:</p>
 
     <div class="mt-2" v-for="(comm, index) in video.comments" :key="index">
       <CommentComponent :comment="comm" @change="commentClick"></CommentComponent>
@@ -101,6 +101,7 @@ const clickTimeCode = (event) => {
 
 const endAns = () => {
   commentId.value = null
+  commentUpdateId.value = null
 }
 
 const endEditing = () => {

@@ -24,6 +24,9 @@
               <router-link to="/employee/recomendations">Рекомендации</router-link>
             </el-button>
             <el-button text>
+              <router-link to="/employee/playlists">Плейлисты</router-link>
+            </el-button>
+            <el-button text>
               <router-link to="/employee/groups">Группы</router-link>
             </el-button>
             <el-button text>
