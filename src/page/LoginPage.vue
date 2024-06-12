@@ -13,7 +13,6 @@
           <el-input type="password" v-model="form.password" />
         </el-form-item>
         <el-text class="mx-1" type="danger">{{message}}</el-text>
-        <p class="underline-offset-2"><a class="text-blue-500" href="user/restorePas">Восстановить пароль</a></p>
         <el-form-item>
           <el-button class="mt-3" type="primary" @click="auth">
             Войти
