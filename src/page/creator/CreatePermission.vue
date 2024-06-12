@@ -6,7 +6,7 @@
       <el-form-item>
         <el-checkbox label="Временный" v-model="checkBox" size="large"/>
       </el-form-item>
-      <el-form-item label="Дата">
+      <el-form-item label="Дата истечения доступа">
         <el-date-picker
             v-model="date"
             type="date"

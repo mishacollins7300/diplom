@@ -2,20 +2,17 @@
   <div class="p-10">
     <div class="flex text-2xl mb-10">Просмотр видео "{{ video.name }}"</div>
 
-    <p class="text-2xl mt-4">Описание:</p>
-    <p class="text-base mt-3">{{ video.description }}</p>
-
-    <!--    <p class="text-2xl mt-4">Автор:</p>-->
-    <!--    <div class="flex gap-5 pb-10">-->
-    <!--      <img class="object-cover w-10 h-10" :src="'http://localhost:8081/image/'+ video?.user?.imageUrl" alt="">-->
-    <!--      <p class="text-base mt-3">{{ video.user.fullname }}</p>-->
-    <!--    </div>-->
-
     <video id="video" width="500px" class="mt-4"
            height="400px"
            :src="'http://localhost:8081/app/stream/' + video.videoUrl"
            controls preload="none">
     </video>
+    <div class="mt-2 flex gap-5 pb-10">
+      <img class="object-cover w-10 h-10" :src="'http://localhost:8081/image/'+ video?.user?.imageUrl" alt="">
+      <p class="text-base mt-3">{{ video?.user?.fullname }}</p>
+    </div>
+    <p class="text-2xl mt-2">Описание:</p>
+    <p class="text-base mt-3">{{ video.description }}</p>
 
     <p class="text-xl mt-3">Таймкоды</p>
 
@@ -26,17 +23,17 @@
       <el-button class="mt-1" type="success" @click="addTimeCode">+</el-button>
     </div>
 
-    <div :hidden="hidden.value" class="flex gap-3 mt-4" style="width: 450px">
-      <div class="w-2/12">
+    <div :hidden="hidden.value" class="flex gap-3 mt-4" style="width: 700px">
+      <div style="width: 70px;">
         <el-input v-model="time"/>
       </div>
-      <div class="w-8/12">
+      <div style="width: 300px;">
         <el-input v-model="description"/>
       </div>
       <div v-if="timeCodeId && timeCodeId.length > 0">
         <el-button type="danger" @click="endEditing">Сбросить редактирование</el-button>
       </div>
-      <div class="w-2/12">
+      <div style="width: 100px;">
         <el-button type="primary" @click="saveTimeCode">Сохранить</el-button>
       </div>
     </div>
@@ -46,12 +43,14 @@
     <div class="mt-2" v-for="(comm, index) in video.comments" :key="index">
       <CommentComponent :comment="comm" @change="commentClick"></CommentComponent>
     </div>
-    <div v-if="commentId && commentId.length > 0">
-      <el-button type="danger" @click="endAns">Сбросить редактирование</el-button>
-    </div>
-    <div class="flex gap-4 w-96 mt-2">
-      <el-input v-model="commentText"/>
-      <el-button type="primary" @click="saveComment">Отправить</el-button>
+
+    <div class="flex gap-4 mt-2" style="width: 700px">
+      <el-input style="width: 340px" v-model="commentText"/>
+      <div style="width: 100px"
+           v-if="(commentId && commentId.length > 0) || (commentUpdateId && commentUpdateId.length > 0)">
+        <el-button type="danger" @click="endAns">Сбросить</el-button>
+      </div>
+      <el-button style="width: 150px" type="primary" @click="saveComment">Отправить</el-button>
     </div>
   </div>
 </template>
@@ -72,24 +71,28 @@ const time = ref("")
 const description = ref("")
 const timeCodeId = ref("")
 const commentId = ref('')
+const commentUpdateId = ref('')
 
 const getVideoView = () => {
   const id = route.query.id
   axios.get("http://localhost:8081/app/videos/" + id, {headers: authHeader()})
       .then((response) => {
         video.value = response.data
+        video.value.timeCodes = video.value.timeCodes.sort((a, b) => (Number(a.time.replace(/\D/g, '')) > Number(b.time.replace(/\D/g, ''))) ? 1 : ((Number(b.time.replace(/\D/g, '')) > Number(a.time.replace(/\D/g, ''))) ? -1 : 0))
       })
 }
 onMounted(() => {
   getVideoView()
 })
 const clickTimeCode = (event) => {
-  const action = event.value.action
+  const action = event.action
   if (action === "delete") {
-    axios.delete("http://localhost:8081/app/timecodes/" + event.value.id, {headers: authHeader()})
-    video.value.timeCodes = video.value.timeCodes.filter((c) => c.id !== event.value.id)
+    axios.delete("http://localhost:8081/app/timecodes/" + event.id, {headers: authHeader()})
+    video.value.timeCodes = video.value.timeCodes.filter((c) => c.id !== event.id)
+    video.value.timeCodes = video.value.timeCodes.sort((a, b) => (Number(a.time.replace(/\D/g, '')) > Number(b.time.replace(/\D/g, ''))) ? 1
+        : ((Number(b.time.replace(/\D/g, '')) > Number(a.time.replace(/\D/g, ''))) ? -1 : 0))
   } else {
-    const code = video.value.timeCodes.filter((c) => c.id === event.value.id)[0]
+    const code = video.value.timeCodes.filter((c) => c.id === event.id)[0]
     time.value = code.time
     description.value = code.description
     timeCodeId.value = code.id
@@ -106,7 +109,18 @@ const endEditing = () => {
 
 const addTimeCode = () => {
   hidden.value = false
-  time.value = document.getElementById("video").currentTime.toFixed()
+  const videoTime = Number(document.getElementById("video").currentTime.toFixed())
+  const timeString = ref('')
+
+  const minutes = String(Math.floor(videoTime / 60))
+  timeString.value = minutes.length > 1 ? minutes : "0" + minutes
+
+  timeString.value = timeString.value + ":"
+
+  const secs = String(videoTime % 60)
+  timeString.value = timeString.value + (secs.length > 1 ? secs : "0" + secs)
+
+  time.value = timeString.value
 }
 
 const saveTimeCode = () => {
@@ -125,6 +139,8 @@ const saveTimeCode = () => {
           axios.get("http://localhost:8081/app/timecodes/video/" + video.value.id, {headers: authHeader()})
               .then((response) => {
                 video.value.timeCodes = response.data
+                video.value.timeCodes = video.value.timeCodes.sort((a, b) => (Number(a.time.replace(/\D/g, '')) > Number(b.time.replace(/\D/g, ''))) ? 1
+                    : ((Number(b.time.replace(/\D/g, '')) > Number(a.time.replace(/\D/g, ''))) ? -1 : 0))
               })
         })
   } else {
@@ -135,6 +151,8 @@ const saveTimeCode = () => {
           axios.get("http://localhost:8081/app/timecodes/video/" + video.value.id, {headers: authHeader()})
               .then((response) => {
                 video.value.timeCodes = response.data
+                video.value.timeCodes = video.value.timeCodes.sort((a, b) => (Number(a.time.replace(/\D/g, '')) > Number(b.time.replace(/\D/g, ''))) ? 1
+                    : ((Number(b.time.replace(/\D/g, '')) > Number(a.time.replace(/\D/g, ''))) ? -1 : 0))
               })
         })
   }
@@ -143,23 +161,52 @@ const saveTimeCode = () => {
 const saveComment = () => {
   const body = {}
   body.text = commentText.value
-  body.videoId = video.value.id
-  if (commentId.value && commentId.value.length > 0) {
-    body.id = commentId.value
+
+  if (commentUpdateId.value && commentUpdateId.value.length > 0) {
+    body.id = commentUpdateId.value
+    axios.put("http://localhost:8081/app/comment", body, {headers: authHeader()})
+        .then(() => {
+          commentText.value = ""
+          axios.get("http://localhost:8081/app/comments/video/" + video.value.id, {headers: authHeader()})
+              .then((response) => {
+                video.value.comments = response.data
+                commentUpdateId.value = null
+              })
+        })
+  } else {
+    body.videoId = video.value.id
+    if (commentId.value && commentId.value.length > 0) {
+      body.commentId = commentId.value
+    }
+    axios.post("http://localhost:8081/app/comment", body, {headers: authHeader()})
+        .then(() => {
+          commentText.value = ""
+          axios.get("http://localhost:8081/app/comments/video/" + video.value.id, {headers: authHeader()})
+              .then((response) => {
+                video.value.comments = response.data
+              })
+        })
   }
-  axios.post("http://localhost:8081/app/comment", body, {headers: authHeader()})
-      .then(() => {
-        commentText.value = ""
-        axios.get("http://localhost:8081/app/comments/video/" + video.value.id, {headers: authHeader()})
-            .then((response) => {
-              video.value.comments = response.data
-            })
-      })
+  commentId.value = null
+  commentUpdateId.value = null
 }
 
 const commentClick = (event) => {
-  if (event.value.action === "ans") {
-    commentId.value = event.value.id
+  if (event.action === "ans") {
+    commentId.value = event.id
+    commentUpdateId.value = null
+  } else if (event.action === "upd") {
+    commentId.value = null
+    commentUpdateId.value = event.id
+    commentText.value = event.text
+  } else if (event.action === "del") {
+    axios.delete("http://localhost:8081/app/comments/" + event.id, {headers: authHeader()})
+        .then(() => {
+          axios.get("http://localhost:8081/app/comments/video/" + video.value.id, {headers: authHeader()})
+              .then((response) => {
+                video.value.comments = response.data
+              })
+        })
   }
 }
 </script>

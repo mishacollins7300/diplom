@@ -1,7 +1,7 @@
 <template>
   <div class="p-10">
 
-    <div class="flex text-2xl mt-10">Рекомендации для пользователя:</div>
+    <div class="flex text-2xl mt-10">Рекомендованные видео:</div>
 
     <div class="flex gap-4 mt-5">
       <el-input style="width: 400px" v-model="search"/>

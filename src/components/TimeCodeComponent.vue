@@ -13,6 +13,7 @@
 
 <script setup>
 import {defineProps,defineEmits} from "vue";
+import {Delete, Edit} from "@element-plus/icons-vue";
 
 const props = defineProps({
   data: {

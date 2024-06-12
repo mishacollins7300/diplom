@@ -98,7 +98,7 @@ const editUser = () => {
   axios.put("http://localhost:8081/app/auth/profile", user.value, {headers: authHeader()})
       .then((response) => {
         user.value = response.data
-        router.go();
+        router.go(-1);
       })
 }
 

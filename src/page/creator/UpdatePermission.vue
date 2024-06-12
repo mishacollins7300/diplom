@@ -6,7 +6,7 @@
       <el-form-item>
         <el-checkbox label="Временный" v-model="checkBox" size="large"/>
       </el-form-item>
-      <el-form-item label="Дата">
+      <el-form-item label="Дата истечения доступа">
         <el-date-picker
             v-model="date"
             type="date"
@@ -79,7 +79,7 @@ onMounted(() => {
         } else {
           permissionObjectMessage.value.name = "Группа пользователей: " + permission.value.user_group
         }
-        playlistMessage.value.name = "ДОступ осуществляется для плейлиста с названием: " + permission.value.playlist_name
+        playlistMessage.value.name = "Доступ осуществляется для плейлиста с названием: " + permission.value.playlist_name
         checkBox.value = permission.value.isTemporary
         description.value = permission.value.description
         date.value = permission.value.inspire_date

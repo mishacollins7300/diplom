@@ -77,8 +77,8 @@ const createUser = () => {
   axios.post("http://localhost:8081/app/user", user.value, {headers: authHeader()})
       .then((response) => {
         user.value = response.data
-        router.go();
       })
+  router.push({path: "mainPage"})
 }
 </script>
 
