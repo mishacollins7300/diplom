@@ -15,10 +15,6 @@
     <div class="flex gap-4 mt-5">
       <el-input style="width: 400px" v-model="search"/>
       <el-button type="primary" style="width: 100px" @click="searchVideo">Поиск</el-button>
-      <el-button type="primary"
-                 @click="router.push({name: 'create-video', query: {playlistId:route.query.id}})">
-        Добавить видеозапись
-      </el-button>
     </div>
 
     <EmployeeVideoCard
@@ -33,10 +29,9 @@
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import authHeader from "@/app/auth-header";
-import {useRoute, useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 import EmployeeVideoCard from "@/components/EmployeeVideoCard.vue";
 
-const router = useRouter()
 const route = useRoute()
 const playlist = ref({})
 const search = ref('')

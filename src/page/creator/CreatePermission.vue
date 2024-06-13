@@ -168,7 +168,7 @@ const getPermissionObject = (id) => {
 }
 
 const searchPlaylists = () => {
-  axios.get("http://localhost:8081/app/permissions/playlists?search=" + search.value,
+  axios.get("http://localhost:8081/app/permissions/playlists?search=" + searchPlaylist.value,
       {headers: authHeader()})
       .then((response) => {
         console.log(response.data)

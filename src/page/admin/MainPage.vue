@@ -24,7 +24,6 @@
           <el-table-column fixed="right" label="Действия" prop="blocked" width="300">
             <template #default="scope">
               <el-button link type="primary" @click="editUser(scope.row.id)" size="small">Изменить</el-button>
-              <el-button link type="primary" size="small">Удалить</el-button>
               <el-button link type="primary" @click="blockUser(scope.row.id)" size="small">
                 {{ scope.row.blocked ? 'Разблокирвать' : 'Заблокировать' }}
               </el-button>
